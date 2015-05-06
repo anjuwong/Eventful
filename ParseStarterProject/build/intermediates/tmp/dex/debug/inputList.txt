@@ -1,4 +1,9 @@
-/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/classes/debug
-/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-1859ed5ce17dbc99bbfbb1b61376d0056440fb89.jar
-/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-33746ab8552927f9149952b42a7c5b1f06151aa8.jar
-/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-3125dbbfa05a46f3417f548d8837aeaee84ada54.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/classes/debug
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8852e82effa81397f36ebd7ef91fea7d465234f7.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-fae7793b38b449c52857bfb97eac0e606004825e.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-c77a0c7796572f223016fb142c93a8571d84033e.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-7dd36db6790303de6bd3e58f0e9284bbd5be5b31.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-c33c1f7ba4cdbed5b6826b8af0a50a97ce84a0fd.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-4e69c85051eb8b00fd940f18d9b00debac96ad6f.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-f79f2a24f06c6a43d7e14d2ff6079ae4f2dad583.jar
+/Users/abby/130/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-8dea9d59427d4b6850c1eeb5e351d149065b5ec7.jar
