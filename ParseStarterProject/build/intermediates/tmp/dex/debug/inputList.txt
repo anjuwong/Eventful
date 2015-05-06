@@ -1,0 +1,4 @@
+/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/classes/debug
+/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-1859ed5ce17dbc99bbfbb1b61376d0056440fb89.jar
+/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-33746ab8552927f9149952b42a7c5b1f06151aa8.jar
+/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-3125dbbfa05a46f3417f548d8837aeaee84ada54.jar

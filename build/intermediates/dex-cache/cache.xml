@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/andrew/Documents/School/Eventful/ParseStarterProject/libs/ParseCrashReporting-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="2bfbcce5ae61bdd10676df8e89710693c1256024">
+        <dex dex="/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-33746ab8552927f9149952b42a7c5b1f06151aa8.jar" />
+    </item>
+    <item
+        jar="/Users/andrew/Documents/School/Parse-Starter-Project-1.9.1/ParseStarterProject/libs/ParseCrashReporting-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="2bfbcce5ae61bdd10676df8e89710693c1256024">
+        <dex dex="/Users/andrew/Documents/School/Parse-Starter-Project-1.9.1/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-a855c037bda41f94fdd11a3835ea1122ae7d3e0b.jar" />
+    </item>
+    <item
+        jar="/Users/andrew/Documents/School/Eventful/ParseStarterProject/libs/Parse-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
+        <dex dex="/Users/andrew/Documents/School/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-3125dbbfa05a46f3417f548d8837aeaee84ada54.jar" />
+    </item>
+    <item
+        jar="/Users/andrew/Documents/School/Parse-Starter-Project-1.9.1/ParseStarterProject/libs/Parse-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
+        <dex dex="/Users/andrew/Documents/School/Parse-Starter-Project-1.9.1/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-65a7f7fda86e3a0870549a129dbc9d836ef189cb.jar" />
+    </item>
+    <item
+        jar="/Users/andrew/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/andrew/Documents/School/Parse-Starter-Project-1.9.1/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-1859ed5ce17dbc99bbfbb1b61376d0056440fb89.jar" />
+    </item>
+
+</items>
