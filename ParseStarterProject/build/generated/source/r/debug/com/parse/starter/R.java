@@ -200,10 +200,11 @@ containing a value of this type.
         public static final int inline=0x7f080007;
         public static final int large=0x7f08000c;
         public static final int left=0x7f08000a;
-        public static final int messenger_send_button=0x7f080016;
+        public static final int messenger_send_button=0x7f080017;
         public static final int normal=0x7f08000d;
         public static final int open_graph=0x7f080000;
         public static final int page=0x7f080001;
+        public static final int realtabcontent=0x7f080016;
         public static final int right=0x7f08000b;
         public static final int small=0x7f08000e;
         public static final int standard=0x7f080005;
@@ -214,13 +215,15 @@ containing a value of this type.
         public static final int com_facebook_activity_layout=0x7f030000;
         public static final int com_facebook_login_fragment=0x7f030001;
         public static final int com_facebook_tooltip_bubble=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int messenger_button_send_blue_large=0x7f030004;
-        public static final int messenger_button_send_blue_round=0x7f030005;
-        public static final int messenger_button_send_blue_small=0x7f030006;
-        public static final int messenger_button_send_white_large=0x7f030007;
-        public static final int messenger_button_send_white_round=0x7f030008;
-        public static final int messenger_button_send_white_small=0x7f030009;
+        public static final int fragment_item_grid=0x7f030003;
+        public static final int fragment_item_list=0x7f030004;
+        public static final int main=0x7f030005;
+        public static final int messenger_button_send_blue_large=0x7f030006;
+        public static final int messenger_button_send_blue_round=0x7f030007;
+        public static final int messenger_button_send_blue_small=0x7f030008;
+        public static final int messenger_button_send_white_large=0x7f030009;
+        public static final int messenger_button_send_white_round=0x7f03000a;
+        public static final int messenger_button_send_white_small=0x7f03000b;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
