@@ -96,6 +96,10 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 		setContentView(R.layout.main);
 
+		// Start login activity 
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+
 		try {
 			ParseUser.logIn("Andrew", "password");
 		} catch (ParseException e) {
