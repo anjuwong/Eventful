@@ -15,6 +15,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import android.util.Log;
 import android.widget.Toast;
 
 public class ParseStarterProjectActivity extends FragmentActivity
@@ -96,7 +97,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
+		try {
+			ParseUser.logIn("Andrew", "password");
+		} catch (ParseException e) {
 
+		}
+		Log.v("Debugging","-1");
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		List<ParseObject> allEvents = allEvents(currentUser);
 		List<ParseObject> futureEvents = futureEvents(allEvents);
@@ -120,8 +126,11 @@ public class ParseStarterProjectActivity extends FragmentActivity
 	}
 
 	public void onFragmentInteraction(String id) {
+		Log.v("Debugging","0");
+
 		Intent intent = new Intent(this, EventViewerActivity.class);
 		intent.putExtra("EVENT_ID", id);
+		Log.v("Debugging","1");
 		startActivity(intent);
 	}
 
@@ -132,4 +141,5 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 	@Override
 	public void onBackPressed() {}
+
 }
