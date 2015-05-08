@@ -25,8 +25,7 @@ public class LoginActivity extends Activity {
         //If current user exists and is already linked to a FB account
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-            Intent intent = new Intent(this, ParseStarterProjectActivity.class);
-            startActivity(intent);
+            openMainPage();
         } else {
             initLogin();
         }
@@ -45,10 +44,15 @@ public class LoginActivity extends Activity {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if (user != null) {
-                    // implement
+                    openMainPage();
                 }
 
             }
         });
+    }
+
+    public void openMainPage() {
+        Intent intent = new Intent(this, ParseStarterProjectActivity.class);
+        startActivity(intent);
     }
 }
