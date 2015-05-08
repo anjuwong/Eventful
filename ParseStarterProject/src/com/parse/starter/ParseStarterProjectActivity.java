@@ -16,6 +16,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 public class ParseStarterProjectActivity extends FragmentActivity
@@ -126,7 +127,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		startActivity(intent);
 	}
 
-	public void newEvent() {
+	public void newEvent(View view) {
 		Intent intent = new Intent(this, EventViewerActivity.class);
 		intent.putExtra("EVENT_ID", "");
 		startActivity(intent);
