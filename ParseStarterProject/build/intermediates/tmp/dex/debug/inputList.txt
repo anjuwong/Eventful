@@ -1,9 +1,0 @@
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/classes/debug
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-f8b218fc2c571214dab645e343885221d38f21c9.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-d59e603f7e2f41f152d36b862030860d57d51928.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-7b79542f9e872a145a8c95b53660c79d25103ff4.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-afa59a5b6b5def16c77e0c77f26ee34c9fe20484.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-1119a77e68818b5b0ce076d5121f8f57c63145cd.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-7b398fcc855ea276891d5267afcf471ebb4afa70.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-e0b0bd03bc8e4900a7e84a360de32752502d0bcf.jar
-/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-5072bb39224da48ecd8a531aec8b5c4f23687a5d.jar
