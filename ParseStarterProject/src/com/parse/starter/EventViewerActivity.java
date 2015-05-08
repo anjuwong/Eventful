@@ -182,6 +182,7 @@ public class EventViewerActivity extends Activity {
             message("Error retrieving records");
         }
         Log.v("Debugging", String.valueOf(objectList.size()));
+        titleList.clear();
         for (ParseObject o: objectList) {
             titleList.add(o.getString("Title"));
             Log.v("Debugging",o.getString("Title"));
@@ -275,6 +276,7 @@ public class EventViewerActivity extends Activity {
             message("Error retrieving records");
         }
         Log.v("Debugging", String.valueOf(objectList.size()));
+        locList.clear();
         for (ParseObject o: objectList) {
             locList.add(o.getString("Location"));
             Log.v("Debugging",o.getString("Location"));
