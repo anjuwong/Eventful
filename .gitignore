@@ -1,0 +1,7 @@
+**.class
+**.jar
+ParseStarterProject/build/intermediates/**
+ParseStarterProject/gradle/wrapper/**
+.idea/**
+.gradle/**
+local.properties
