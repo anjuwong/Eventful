@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="com_facebook_blue">#3B5998</color>
     <color name="com_facebook_button_background_color">#415dae</color>
@@ -37,10 +37,10 @@
     <dimen name="com_facebook_share_button_padding_top">12dp</dimen>
     <dimen name="com_facebook_share_button_text_size">16.0sp</dimen>
     <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/res/values/strings.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Eventful</string>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
     <string name="com_facebook_internet_permission_error_message">WebView login requires INTERNET permission</string>
@@ -58,20 +58,20 @@
     <string name="com_facebook_send_button_text">Send</string>
     <string name="com_facebook_share_button_text">Share</string>
     <string name="com_facebook_tooltip_default">New! You\'re in control - choose what info you want to share with apps.</string>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/res/values/strings.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/res/values/strings.xml -->
     <eat-comment/>
     <string name="facebook_app_id">1630481943839860</string>
     <string name="greeting">Your activities</string>
     <string name="hello">Your activities</string>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="messenger_send_button_text">Send</string>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/res/values/strings.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/res/values/strings.xml -->
     <eat-comment/>
     <string name="parse_app_id">TL9an71WseC8sLTBMvHfdViNtFJ2XAp5tsFGpu70</string>
     <string name="parse_client_key">UHkuva5bbGcivLA9K9a9HxmD3TnoAYvFzUzGgVpC</string>
     <string name="sample_title"/>
-    <!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="MessengerButton">
     <item name="android:clickable">true</item>

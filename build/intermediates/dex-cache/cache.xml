@@ -2,60 +2,60 @@
 <items version="2" >
 
     <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/libs/Parse-1.9.1.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-1a3c6e9ef7550bb3991ec567c65236d2dc559b7f.jar" />
-    </item>
-    <item
-        jar="/Users/andrew/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-1859ed5ce17dbc99bbfbb1b61376d0056440fb89.jar" />
-    </item>
-    <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/libs/internal_impl-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-6c26ec4f6719a3e6b199718f7fef344537022b4a.jar" />
-    </item>
-    <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-400a558d4b3c6a27c75deb26a1b695c868a40aac.jar" />
-    </item>
-    <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-cfc800db3bdae9ab10b6128e87a8c4be3647fe98.jar" />
-    </item>
-    <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/libs/ParseFacebookUtilsV4-1.9.1.jar"
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/ParseFacebookUtilsV4-1.9.1.jar"
         jumboMode="false"
         revision="22.0.0"
         sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-4edd4e347a4afef11e1e00397e872df851cbd93b.jar" />
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-d59e603f7e2f41f152d36b862030860d57d51928.jar" />
     </item>
     <item
-        jar="/Applications/adt-bundle-mac-x86_64-20140321/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jar="/Users/derek/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-43cdee82fe29d865ee373911a2995503990517f3.jar" />
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-7b79542f9e872a145a8c95b53660c79d25103ff4.jar" />
     </item>
     <item
-        jar="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/libs/ParseCrashReporting-1.9.1.jar"
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-5072bb39224da48ecd8a531aec8b5c4f23687a5d.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/Parse-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-e0b0bd03bc8e4900a7e84a360de32752502d0bcf.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/ParseCrashReporting-1.9.1.jar"
         jumboMode="false"
         revision="22.0.0"
         sha1="2bfbcce5ae61bdd10676df8e89710693c1256024">
-        <dex dex="/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-c33a8f9112d2f42b25f053b05d622e1d53dafb79.jar" />
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.1-afa59a5b6b5def16c77e0c77f26ee34c9fe20484.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-1119a77e68818b5b0ce076d5121f8f57c63145cd.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-7b398fcc855ea276891d5267afcf471ebb4afa70.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-f8b218fc2c571214dab645e343885221d38f21c9.jar" />
     </item>
 
 </items>

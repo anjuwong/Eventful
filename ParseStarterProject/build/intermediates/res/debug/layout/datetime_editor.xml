@@ -11,4 +11,4 @@
         android:id="@+id/edit_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></TimePicker>
-</LinearLayout><!-- From: file:/Users/andrew/Documents/School/Eventful/Eventful/ParseStarterProject/res/layout/datetime_editor.xml -->
+</LinearLayout><!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/res/layout/datetime_editor.xml -->

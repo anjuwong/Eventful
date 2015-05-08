@@ -69,35 +69,35 @@ ADDED from AndroidManifest.xml:27:9
 		ADDED from AndroidManifest.xml:28:13
 	android:name
 		ADDED from AndroidManifest.xml:27:19
-activity#com.parse.starter.EventViewerActivity
-ADDED from AndroidManifest.xml:32:9
-	android:label
-		ADDED from AndroidManifest.xml:33:13
-	android:name
-		ADDED from AndroidManifest.xml:32:19
-activity#com.parse.starter.ParseStarterProjectActivity
-ADDED from AndroidManifest.xml:37:9
-	android:label
-		ADDED from AndroidManifest.xml:39:13
-	android:name
-		ADDED from AndroidManifest.xml:38:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:40:13
+ADDED from AndroidManifest.xml:29:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:41:17
+ADDED from AndroidManifest.xml:30:17
 	android:name
-		ADDED from AndroidManifest.xml:41:25
+		ADDED from AndroidManifest.xml:30:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:43:17
+ADDED from AndroidManifest.xml:32:17
 	android:name
-		ADDED from AndroidManifest.xml:43:27
-activity#com.facebook.FacebookActivity
-ADDED from AndroidManifest.xml:47:9
+		ADDED from AndroidManifest.xml:32:27
+activity#com.parse.starter.EventViewerActivity
+ADDED from AndroidManifest.xml:36:9
 	android:label
-		ADDED from AndroidManifest.xml:50:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:48:13
-	android:theme
-		ADDED from AndroidManifest.xml:49:13
+		ADDED from AndroidManifest.xml:37:13
 	android:name
-		ADDED from AndroidManifest.xml:47:19
+		ADDED from AndroidManifest.xml:36:19
+activity#com.parse.starter.ParseStarterProjectActivity
+ADDED from AndroidManifest.xml:40:9
+	android:label
+		ADDED from AndroidManifest.xml:42:13
+	android:name
+		ADDED from AndroidManifest.xml:41:13
+activity#com.facebook.FacebookActivity
+ADDED from AndroidManifest.xml:45:9
+	android:label
+		ADDED from AndroidManifest.xml:48:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:46:13
+	android:theme
+		ADDED from AndroidManifest.xml:47:13
+	android:name
+		ADDED from AndroidManifest.xml:45:19
