@@ -30,11 +30,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
 	public List<ParseObject> allEvents(ParseUser currentUser) {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
 		query.whereEqualTo("User", currentUser.getObjectId());
+		query.orderByDescending("Time");
 		List<ParseObject> events = new ArrayList<>();
 		try {
 			events = query.find();
 		} catch (ParseException e) {
-			error("Failed to get user's associated events");
+			error("Failed to get user's associated events. Check your internet connection.");
 		}
 		return events;
 	}
@@ -96,16 +97,6 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 		setContentView(R.layout.main);
 
-		// Start login activity 
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);
-
-		try {
-			ParseUser.logIn("Andrew", "password");
-		} catch (ParseException e) {
-
-		}
-
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		List<ParseObject> allEvents = allEvents(currentUser);
 		List<ParseObject> futureEvents = futureEvents(allEvents);
@@ -129,11 +120,14 @@ public class ParseStarterProjectActivity extends FragmentActivity
 	}
 
 	public void onFragmentInteraction(String id) {
-		/*Intent intent = new Intent(this, EventViewerActivity.class);
+		Intent intent = new Intent(this, EventViewerActivity.class);
 		intent.putExtra("EVENT_ID", id);
-		startActivity(intent);*/
-		Toast toast = Toast.makeText(ParseStarterProjectActivity.this, id, Toast.LENGTH_LONG);
-		toast.show();
+		startActivity(intent);
+	}
+
+	public void newEvent() {
+		Intent intent = new Intent(this, EventViewerActivity.class);
+		startActivity(intent);
 	}
 
 	@Override

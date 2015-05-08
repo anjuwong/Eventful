@@ -7,7 +7,7 @@
         android:layout_height="match_parent" />
 
     <TextView android:id="@android:id/empty" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center" />
+        android:layout_height="473dp" android:gravity="center" />
 
 </FrameLayout>
 <!-- From: file:/Users/derek/Documents/Eventful/ParseStarterProject/res/layout/fragment_item_list.xml -->

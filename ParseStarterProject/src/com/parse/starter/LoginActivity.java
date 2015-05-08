@@ -25,8 +25,8 @@ public class LoginActivity extends Activity {
         //If current user exists and is already linked to a FB account
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-            // Go to user info activity
-            //TODO(abby/derek): implement
+            Intent intent = new Intent(this, ParseStarterProjectActivity.class);
+            startActivity(intent);
         } else {
             initLogin();
         }
