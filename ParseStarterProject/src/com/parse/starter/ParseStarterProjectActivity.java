@@ -1,7 +1,6 @@
 package com.parse.starter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Intent;
@@ -15,7 +14,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,7 +27,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		finish();
 	}
 
-	public List<ParseObject> allEvents(ParseUser currentUser) {
+	public List<ParseObject> getAllEvents(ParseUser currentUser) {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
 		query.whereEqualTo("User", currentUser.getObjectId());
 		query.orderByDescending("Time");
@@ -42,28 +40,15 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return events;
 	}
 
-	public List<ParseObject> futureEvents(List<ParseObject> allEvents) {
-		List<ParseObject> futureEvents = new ArrayList<>();
-		Date currentDate = new Date();
-		for (int i = 0; i < allEvents.size(); i++) {
-			ParseObject event = allEvents.get(i);
-			if (event.getDate("Time").after(currentDate)) {
-				futureEvents.add(event);
+	public List<ParseObject> filterEvents(List<Event> events) {
+		List<ParseObject> filteredEvents = new ArrayList<>();
+		for (int i = 0; i < events.size(); i++) {
+			Event event = events.get(i);
+			if (event.isValid()) {
+				filteredEvents.add(event.getParseObject());
 			}
 		}
-		return futureEvents;
-	}
-
-	public List<ParseObject> pastEvents(List<ParseObject> allEvents) {
-		List<ParseObject> pastEvents = new ArrayList<>();
-		Date currentDate = new Date();
-		for (int i = 0; i < allEvents.size(); i++) {
-			ParseObject event = allEvents.get(i);
-			if (event.getDate("Time").before(currentDate)) {
-				pastEvents.add(event);
-			}
-		}
-		return pastEvents;
+		return filteredEvents;
 	}
 
 	public ArrayList<String> getDescriptions(List<ParseObject> events) {
@@ -100,9 +85,11 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		setContentView(R.layout.main);
 
 		ParseUser currentUser = ParseUser.getCurrentUser();
-		List<ParseObject> allEvents = allEvents(currentUser);
-		List<ParseObject> futureEvents = futureEvents(allEvents);
-		List<ParseObject> pastEvents = pastEvents(allEvents);
+		List<ParseObject> allEvents = getAllEvents(currentUser);
+		List<Event> futureEventsBeforeFilter = FutureEvent.getFutureEvents(allEvents);
+		List<ParseObject> futureEvents = filterEvents(futureEventsBeforeFilter);
+		List<Event> pastEventsBeforeFilter = PastEvent.getPastEvents(allEvents);
+		List<ParseObject> pastEvents = filterEvents(pastEventsBeforeFilter);
 
 		Bundle allEventsBundle = bundle(getDescriptions(allEvents), getIDs(allEvents));
 		Bundle futureEventsBundle = bundle(getDescriptions(futureEvents), getIDs(futureEvents));
