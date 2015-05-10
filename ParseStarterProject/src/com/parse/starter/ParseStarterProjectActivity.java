@@ -20,6 +20,7 @@ import android.widget.Toast;
 public class ParseStarterProjectActivity extends FragmentActivity
 		implements ItemFragment.OnFragmentInteractionListener {
 	private FragmentTabHost mTabHost;
+	private int mReloadCount = 1;
 
 	public void error(String msg) {
 		Toast toast = Toast.makeText(ParseStarterProjectActivity.this, msg, Toast.LENGTH_LONG);
@@ -104,21 +105,14 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		Bundle futureEventsBundle = genBundle(getDescriptions(futureEvents), getIDs(futureEvents));
 		Bundle pastEventsBundle = genBundle(getDescriptions(pastEvents), getIDs(pastEvents));
 
-		mTabHost.addTab(
-				mTabHost.newTabSpec("a" + allEvents.size()).setIndicator("All Events"),
-				ItemFragment.class,
-				allEventsBundle
-			);
-		mTabHost.addTab(
-				mTabHost.newTabSpec("f" + futureEvents.size()).setIndicator("Future Events"),
-				ItemFragment.class,
-				futureEventsBundle
-			);
-		mTabHost.addTab(
-				mTabHost.newTabSpec("past" + pastEvents.size()).setIndicator("Past Events"),
-				ItemFragment.class,
-				pastEventsBundle
-			);
+		mTabHost.addTab(mTabHost.newTabSpec("a" + mReloadCount).setIndicator("All Events"),
+				ItemFragment.class, allEventsBundle);
+		mTabHost.addTab(mTabHost.newTabSpec("f" + mReloadCount).setIndicator("Future Events"),
+				ItemFragment.class, futureEventsBundle);
+		mTabHost.addTab(mTabHost.newTabSpec("p" + mReloadCount).setIndicator("Past Events"),
+				ItemFragment.class, pastEventsBundle);
+
+		mReloadCount++;
 	}
 
 	public void onFragmentInteraction(String id) {
