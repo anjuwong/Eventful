@@ -72,7 +72,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return ids;
 	}
 
-	public Bundle bundle(ArrayList<String> descriptions, ArrayList<String> ids) {
+	public Bundle genBundle(ArrayList<String> descriptions, ArrayList<String> ids) {
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("descriptions", descriptions);
 		bundle.putStringArrayList("ids", ids);
@@ -84,6 +84,15 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 		setContentView(R.layout.main);
 
+		mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
+		ParseAnalytics.trackAppOpenedInBackground(getIntent());
+	}
+
+	public void reloadEvents() {
+		mTabHost.clearAllTabs();
+
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		List<ParseObject> allEvents = getAllEvents(currentUser);
 		List<Event> futureEventsBeforeFilter = FutureEvent.getFutureEvents(allEvents);
@@ -91,21 +100,25 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		List<Event> pastEventsBeforeFilter = PastEvent.getPastEvents(allEvents);
 		List<ParseObject> pastEvents = filterEvents(pastEventsBeforeFilter);
 
-		Bundle allEventsBundle = bundle(getDescriptions(allEvents), getIDs(allEvents));
-		Bundle futureEventsBundle = bundle(getDescriptions(futureEvents), getIDs(futureEvents));
-		Bundle pastEventsBundle = bundle(getDescriptions(pastEvents), getIDs(pastEvents));
+		Bundle allEventsBundle = genBundle(getDescriptions(allEvents), getIDs(allEvents));
+		Bundle futureEventsBundle = genBundle(getDescriptions(futureEvents), getIDs(futureEvents));
+		Bundle pastEventsBundle = genBundle(getDescriptions(pastEvents), getIDs(pastEvents));
 
-		mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
-		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-		mTabHost.addTab(mTabHost.newTabSpec("all").setIndicator("All Events"),
-				ItemFragment.class, allEventsBundle);
-		mTabHost.addTab(mTabHost.newTabSpec("future").setIndicator("Future Events"),
-				ItemFragment.class, futureEventsBundle);
-		mTabHost.addTab(mTabHost.newTabSpec("past").setIndicator("Past Events"),
-				ItemFragment.class, pastEventsBundle);
-
-		ParseAnalytics.trackAppOpenedInBackground(getIntent());
+		mTabHost.addTab(
+				mTabHost.newTabSpec("a" + allEvents.size()).setIndicator("All Events"),
+				ItemFragment.class,
+				allEventsBundle
+			);
+		mTabHost.addTab(
+				mTabHost.newTabSpec("f" + futureEvents.size()).setIndicator("Future Events"),
+				ItemFragment.class,
+				futureEventsBundle
+			);
+		mTabHost.addTab(
+				mTabHost.newTabSpec("past" + pastEvents.size()).setIndicator("Past Events"),
+				ItemFragment.class,
+				pastEventsBundle
+			);
 	}
 
 	public void onFragmentInteraction(String id) {
@@ -118,6 +131,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		Intent intent = new Intent(this, EventViewerActivity.class);
 		intent.putExtra("EVENT_ID", "");
 		startActivity(intent);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		reloadEvents();
 	}
 
 	@Override

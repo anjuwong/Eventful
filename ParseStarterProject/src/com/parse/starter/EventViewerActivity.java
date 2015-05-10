@@ -83,6 +83,7 @@ public class EventViewerActivity extends Activity {
         event.put("Time", datetime);
         event.put("Location", loc);
         event.put("Creator", creator);
+        event.put("User", creator);
         event.put("Type", type);
 
         event.saveInBackground();
@@ -90,6 +91,8 @@ public class EventViewerActivity extends Activity {
         // TODO: save new title
         // TODO: save new inviteList
         message("Saved!");
+
+        finish();
     }
 
     public void cancel (View view) {
