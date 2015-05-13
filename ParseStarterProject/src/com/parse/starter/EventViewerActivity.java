@@ -115,6 +115,7 @@ public class EventViewerActivity extends Activity {
         if (!exists) {
             ParseObject saveLoc = new ParseObject("Locations");
             saveLoc.put("User",userId);
+            saveLoc.put("Type", type);
             saveLoc.put("Location",loc);
             saveLoc.saveInBackground();
         }
