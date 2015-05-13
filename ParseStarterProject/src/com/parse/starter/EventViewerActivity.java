@@ -77,6 +77,9 @@ public class EventViewerActivity extends Activity {
     }
     EVFillerBehavior filler;
     public void submit (View view) {
+        /* TODO: make this part of the filler behavior
+         * Guest's submit should only save votes
+         */
 
         // TODO: make sure that title, datetime, loc are valid (not default)
         event.put("Title", title);
@@ -90,8 +93,32 @@ public class EventViewerActivity extends Activity {
 
         // TODO: save new title
         // TODO: save new inviteList
+        boolean exists = false;
+        for (String t:titleList) {
+            if (t.equals(title)) {
+                exists = true;
+            }
+        }
+        if (!exists) {
+            ParseObject saveTitle = new ParseObject("Titles");
+            saveTitle.put("User",userId);
+            saveTitle.put("Title",title);
+            saveTitle.put("Type",type);
+            saveTitle.saveInBackground();
+        }
+        exists = false;
+        for (String l:locList) {
+            if (l.equals(loc)) {
+                exists = true;
+            }
+        }
+        if (!exists) {
+            ParseObject saveLoc = new ParseObject("Locations");
+            saveLoc.put("User",userId);
+            saveLoc.put("Location",loc);
+            saveLoc.saveInBackground();
+        }
         message("Saved!");
-
         finish();
     }
 
@@ -145,71 +172,102 @@ public class EventViewerActivity extends Activity {
             creator = event.getString("Creator");
         }
 
-        String userId = ParseUser.getCurrentUser().getObjectId();
+        TextView title_text = (TextView) findViewById(R.id.event_title);
 
-        filler = new OwnerEVFillerBehavior();
+        if(event.getString("Title").equals(""))
+            title_text.setText("activity name");
+        else
+            title_text.setText(event.getString("Title"));
+
+
+        TextView time_text = (TextView) findViewById(R.id.event_time);
+        Date emptyDate = new Date();
+        emptyDate.setTime(0);
+        if(event.getDate("Time").equals(emptyDate))
+            time_text.setText("00/00/0000, 00:00");
+        else
+            time_text.setText(event.getDate("Time").toString());
+
+
+        TextView loc_text = (TextView) findViewById(R.id.event_loc);
+        if(event.getString("Location").equals(""))
+            loc_text.setText("location");
+        else
+            loc_text.setText(event.getString("Location"));
+        // TODO
+        /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
+        if(!eventInfo.getJSONArray("InviteListId").equals("")) {
+            // search for inviteListId
+
+            // before adding a group, make sure it doesn't exist
+        }*/
+
 
         // TODO: alter clickability and maybe color (later) of stuff
-        if (event.getDate("Time").before(new Date())) {
+        if (!event.getDate("Time").equals(emptyDate) && event.getDate("Time").before(new Date())) {
             // can't change time, loc, friends
             // can add photos, notes, etc.
-
+            Log.v("Debugging","that's expired");
+            filler = new ExpiredEVFillerBehavior();
         } else if (userId.equals(creator)) {
             // can change time, loc, friends, etc.
+            Log.v("Debugging","that's a creator");
+            filler = new OwnerEVFillerBehavior();
         } else {
             // can't change time, loc, friends
             // can submit other times and locs
-            ((TextView) findViewById(R.id.event_title)).setClickable(false);
+            Log.v("Debugging","that's a guest");
+            filler = new GuestEVFillerBehavior();
 
         }
         filler.fillView(event, this);
 
     }
 
-    // TODO: there is a design pattern (Strategy?) in these dialogs
-    public void editTitle(View view) {
+    private void editTextField(View view, String changePrompt, String tableName,
+                                              String attribute, final List<String> list, final TextSetter setText) {
+        // Creates a new dialogBuilder for setting text, queries for a given attribute, and fills UI
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.title_editor, null);
-        ((TextView)(layout.findViewById(R.id.changeprompt))).setText("Change the activity name");
 
-        // Populate old titles
-        // TODO: set onclick check for duplicate
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Titles");
+
+        final View layout = inflater.inflate(R.layout.title_editor, null);
+        ((TextView)(layout.findViewById(R.id.changeprompt))).setText(changePrompt);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(tableName);
+
         query.whereEqualTo("User", userId);
+        query.whereEqualTo("Type",type);
         ArrayList<ParseObject> objectList = new ArrayList<ParseObject>();
         try {
             objectList = (ArrayList) query.find();
         } catch (com.parse.ParseException e) {
             message("Error retrieving records");
         }
-        Log.v("Debugging", String.valueOf(objectList.size()));
-        titleList.clear();
+
+        list.clear();
         for (ParseObject o: objectList) {
-            titleList.add(o.getString("Title"));
-            Log.v("Debugging",o.getString("Title"));
+
+            list.add(o.getString(attribute));
+
         }
-        ListAdapter listAdapter = new ArrayAdapter<String>(EventViewerActivity.this, R.layout.row, titleList);
+        ListAdapter listAdapter = new ArrayAdapter<String>(EventViewerActivity.this, R.layout.row, list);
         ListView lv = (ListView) layout.findViewById(R.id.edit_list);
-        lv.setOnItemClickListener(new ListView.OnItemClickListener()
-        {
+        lv.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.v("Debugging", titleList.get(i));
-                ((TextView) layout.findViewById(R.id.edittext)).setText(titleList.get(i));
+                ((TextView) layout.findViewById(R.id.edittext)).setText(list.get(i));
 
             }
 
         });
         lv.setAdapter(listAdapter);
-
         builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (!((EditText) layout.findViewById(R.id.edittext)).getText().toString().equals("")) {
-                    title = ((EditText) layout.findViewById(R.id.edittext)).getText().toString();
-                    ((TextView) findViewById(R.id.event_title)).setText(title);
+                    setText.call(((EditText) layout.findViewById(R.id.edittext)).getText().toString());
+                    //((TextView) findViewById(R.id.event_title)).setText(title);
                 }
 
             }
@@ -221,6 +279,10 @@ public class EventViewerActivity extends Activity {
                 });   ;
         builder.create();
         final Dialog dialog = builder.show();
+    }
+    public void editTitle(View view) {
+
+        editTextField(view, "Change the activity name", "Titles", "Title", titleList, new setTitle());
     }
     public void editTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
@@ -252,53 +314,7 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
     public void editLoc(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
-        LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.title_editor, null);
-        ((TextView)(layout.findViewById(R.id.changeprompt))).setText("Change the location");
-        builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                if (!((EditText) layout.findViewById(R.id.edittext)).getText().toString().equals("")) {
-                    loc = ((EditText) layout.findViewById(R.id.edittext)).getText().toString();
-                    ((TextView) findViewById(R.id.event_loc)).setText(loc);
-                }
-            }
-        })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Locations");
-        query.whereEqualTo("User", userId);
-        ArrayList<ParseObject> objectList = new ArrayList<ParseObject>();
-        try {
-            objectList = (ArrayList) query.find();
-        } catch (com.parse.ParseException e) {
-            message("Error retrieving records");
-        }
-        Log.v("Debugging", String.valueOf(objectList.size()));
-        locList.clear();
-        for (ParseObject o: objectList) {
-            locList.add(o.getString("Location"));
-            Log.v("Debugging",o.getString("Location"));
-        }
-        ListAdapter listAdapter = new ArrayAdapter<String>(EventViewerActivity.this, R.layout.row, locList);
-        ListView lv = (ListView) layout.findViewById(R.id.edit_list);
-        lv.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.v("Debugging", locList.get(i));
-                ((TextView) layout.findViewById(R.id.edittext)).setText(locList.get(i));
-
-            }
-
-        });
-        lv.setAdapter(listAdapter);
-
-        builder.create();
-        final Dialog dialog = builder.show();
+        editTextField(view, "Change the location", "Locations", "Location", locList, new setLoc());
     }
 
     public void editInvites(View view) {
@@ -306,6 +322,20 @@ public class EventViewerActivity extends Activity {
 
     }
 
+
+    // used to set text within other classes
+    private class setTitle implements TextSetter {
+        public void call(String text) {
+            title=text;
+            ((TextView) findViewById(R.id.event_title)).setText(text);
+        }
+    }
+    private class setLoc implements TextSetter {
+        public void call(String text) {
+            loc=text;
+            ((TextView) findViewById(R.id.event_loc)).setText(text);
+        }
+    }
     public void message(String msg) {
         Toast toast = Toast.makeText(EventViewerActivity.this, msg,
                 Toast.LENGTH_LONG);

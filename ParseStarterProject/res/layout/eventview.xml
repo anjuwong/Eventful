@@ -60,7 +60,7 @@
             android:layout_weight="0"
             android:layout_gravity="bottom"
             android:onClick="cancel"
-            android:text="Cancel"/>
+            android:text="Back"/>
         <Button
             android:id="@+id/submit_button"
             android:layout_toRightOf="@id/cancel_button"

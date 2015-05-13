@@ -1,6 +1,9 @@
 package com.parse.starter;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,31 +19,21 @@ public class OwnerEVFillerBehavior implements EVFillerBehavior {
 
     public void fillView(ParseObject eventInfo, Activity parent) {
 
-
         TextView title_text = (TextView) parent.findViewById(R.id.event_title);
-
-
-        if(eventInfo.getString("Title").equals(""))
-            title_text.setText("activity name");
-        else
-            title_text.setText(eventInfo.getString("Title"));
-
-
         TextView time_text = (TextView) parent.findViewById(R.id.event_time);
-        Date emptyDate = new Date();
-        emptyDate.setTime(0);
-        if(eventInfo.getDate("Time").equals(emptyDate))
-            time_text.setText("00/00/0000, 00:00");
-        else
-            time_text.setText(eventInfo.getDate("Time").toString());
-
-
         TextView loc_text = (TextView) parent.findViewById(R.id.event_loc);
-        if(eventInfo.getString("Location").equals(""))
-            loc_text.setText("location");
-        else
-            loc_text.setText(eventInfo.getString("Location"));
 
+        title_text.setTextColor(Color.YELLOW);
+        title_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+        title_text.setAllCaps(true);
+
+        time_text.setTextColor(Color.YELLOW);
+        time_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+
+        loc_text.setTextColor(Color.YELLOW);
+        loc_text.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.BOLD));
+
+        //TODO: add voting dialog (onLongClick)
 
         // TODO
         /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
@@ -52,7 +45,4 @@ public class OwnerEVFillerBehavior implements EVFillerBehavior {
         Log.v("Debugging","FRIENDS ADDED");*/
 
     }
-
-
-
 }
