@@ -43,10 +43,12 @@
         android:paddingTop="10sp"
         android:paddingBottom="10sp"/>
 
-    <ListView
+    <GridView
         android:id="@+id/invite_list"
         android:layout_width="wrap_content"
-        android:layout_height="300sp" />
+        android:layout_height="300sp"
+        android:numColumns="5"
+        />
 
 
     <RelativeLayout
