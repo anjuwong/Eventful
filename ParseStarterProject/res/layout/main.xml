@@ -36,5 +36,13 @@
             android:onClick="newEvent"
             android:layout_gravity="center_horizontal|bottom" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FILTER EVENTS BY TYPE"
+            android:id="@+id/filterbutton"
+            android:onClick="filterEventsByType"
+            android:layout_gravity="center_horizontal|bottom" />
+
     </LinearLayout>
 </android.support.v4.app.FragmentTabHost>

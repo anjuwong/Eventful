@@ -3,6 +3,8 @@ package com.parse.starter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +23,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		implements ItemFragment.OnFragmentInteractionListener {
 	private FragmentTabHost mTabHost;
 	private int mReloadCount = 1;
+    private int currentTypeFilter = 4;
 
 	public void error(String msg) {
 		Toast toast = Toast.makeText(ParseStarterProjectActivity.this, msg, Toast.LENGTH_LONG);
@@ -40,6 +43,27 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		}
 		return events;
 	}
+
+    public List<ParseObject> getAllEventsFilteredByType(ParseUser currentUser, int type) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.whereEqualTo("User", currentUser.getObjectId());
+        query.orderByDescending("Time");
+        List<ParseObject> events = new ArrayList<>();
+        try {
+            events = query.find();
+        } catch (ParseException e) {
+            error("Failed to get user's associated events. Check your internet connection.");
+        }
+
+        List<ParseObject> filteredEvents = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++) {
+            ParseObject event = events.get(i);
+            if (event.getInt("Type") != type) {
+                filteredEvents.add(event);
+            }
+        }
+        return filteredEvents;
+    }
 
 	public List<ParseObject> filterEvents(List<Event> events) {
 		List<ParseObject> filteredEvents = new ArrayList<>();
@@ -93,27 +117,49 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 	public void reloadEvents() {
 		mTabHost.clearAllTabs();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        List<ParseObject> allEvents = getAllEvents(currentUser);
 
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		List<ParseObject> allEvents = getAllEvents(currentUser);
-		List<Event> futureEventsBeforeFilter = FutureEvent.getFutureEvents(allEvents);
-		List<ParseObject> futureEvents = filterEvents(futureEventsBeforeFilter);
-		List<Event> pastEventsBeforeFilter = PastEvent.getPastEvents(allEvents);
-		List<ParseObject> pastEvents = filterEvents(pastEventsBeforeFilter);
+        if(currentTypeFilter == 4) {
+            allEvents = getAllEvents(currentUser);
+        } else {
+            allEvents = getAllEventsFilteredByType(currentUser, currentTypeFilter);
+        }
 
-		Bundle allEventsBundle = genBundle(getDescriptions(allEvents), getIDs(allEvents));
-		Bundle futureEventsBundle = genBundle(getDescriptions(futureEvents), getIDs(futureEvents));
-		Bundle pastEventsBundle = genBundle(getDescriptions(pastEvents), getIDs(pastEvents));
+        List<Event> futureEventsBeforeFilter = FutureEvent.getFutureEvents(allEvents);
+        List<ParseObject> futureEvents = filterEvents(futureEventsBeforeFilter);
+        List<Event> pastEventsBeforeFilter = PastEvent.getPastEvents(allEvents);
+        List<ParseObject> pastEvents = filterEvents(pastEventsBeforeFilter);
 
-		mTabHost.addTab(mTabHost.newTabSpec("a" + mReloadCount).setIndicator("All Events"),
-				ItemFragment.class, allEventsBundle);
-		mTabHost.addTab(mTabHost.newTabSpec("f" + mReloadCount).setIndicator("Future Events"),
-				ItemFragment.class, futureEventsBundle);
-		mTabHost.addTab(mTabHost.newTabSpec("p" + mReloadCount).setIndicator("Past Events"),
-				ItemFragment.class, pastEventsBundle);
+        Bundle allEventsBundle = genBundle(getDescriptions(allEvents), getIDs(allEvents));
+        Bundle futureEventsBundle = genBundle(getDescriptions(futureEvents), getIDs(futureEvents));
+        Bundle pastEventsBundle = genBundle(getDescriptions(pastEvents), getIDs(pastEvents));
 
-		mReloadCount++;
+        mTabHost.addTab(mTabHost.newTabSpec("a" + mReloadCount).setIndicator("All Events"),
+                ItemFragment.class, allEventsBundle);
+        mTabHost.addTab(mTabHost.newTabSpec("f" + mReloadCount).setIndicator("Future Events"),
+                ItemFragment.class, futureEventsBundle);
+        mTabHost.addTab(mTabHost.newTabSpec("p" + mReloadCount).setIndicator("Past Events"),
+                ItemFragment.class, pastEventsBundle);
+
+        mReloadCount++;
+
+
 	}
+
+    public void filterEventsByType(View view) {
+        String[] actList = {"Food", "Workout", "Chill", "Game", "All"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(ParseStarterProjectActivity.this);
+        builder.setTitle("Choose an Activity")
+                .setItems(actList, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        currentTypeFilter = which;
+                        reloadEvents();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
 
 	public void onFragmentInteraction(String id) {
 		Intent intent = new Intent(this, EventViewerActivity.class);
