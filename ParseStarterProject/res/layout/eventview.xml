@@ -59,7 +59,7 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:layout_gravity="bottom"
             android:onClick="cancel"
             android:text="Back"/>
@@ -68,7 +68,7 @@
             android:layout_toRightOf="@id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:layout_gravity="bottom"
             android:onClick="submit"
             android:text="Submit"/>
