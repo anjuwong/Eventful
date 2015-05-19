@@ -58,7 +58,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
         List<ParseObject> filteredEvents = new ArrayList<>();
         for (int i = 0; i < events.size(); i++) {
             ParseObject event = events.get(i);
-            if (event.getInt("Type") != type) {
+            if (event.getInt("Type") == type) {
                 filteredEvents.add(event);
             }
         }
