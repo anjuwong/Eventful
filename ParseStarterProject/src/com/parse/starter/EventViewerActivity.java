@@ -1,39 +1,41 @@
 package com.parse.starter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.LayoutInflater;
-import android.app.Activity;
-import android.widget.Adapter;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,12 +63,23 @@ public class EventViewerActivity extends Activity {
     public TextView loc_text;
     public TextView time_text;
     public EVFillerBehavior filler;
+    private GoogleApiClient mGoogleApiClient;
+
+    /**
+     * Request code passed to the PlacePicker intent to identify its result when it returns.
+     */
+    private static final int REQUEST_PLACE_PICKER = 1;
 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventview);
         Intent intent = getIntent();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        mGoogleApiClient.connect();
 
         eventId = intent.getStringExtra("EVENT_ID");
         getEvent(eventId);
@@ -183,8 +196,23 @@ public class EventViewerActivity extends Activity {
 
         if(loc.equals(""))
             loc_text.setText("location");
-        else
-            loc_text.setText(event.getString("Location"));
+        else {
+            Places.GeoDataApi.getPlaceById(mGoogleApiClient, event.getString("Location"))
+                    .setResultCallback(new ResultCallback<PlaceBuffer>() {
+                        @Override
+                        public void onResult(PlaceBuffer places) {
+                            if (places.getStatus().isSuccess()) {
+                                final Place place = places.get(0);
+                                final CharSequence name = place.getName();
+                                final CharSequence address = place.getAddress();
+
+                                loc = place.getId();
+                                loc_text.setText(name + " (" + address + ")");
+                            }
+                            places.release();
+                        }
+                    });
+        }
 
         // TODO
         /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
@@ -267,8 +295,48 @@ public class EventViewerActivity extends Activity {
         editTextField(view, "Change the activity name", "Titles", "Title", titleList, new setTitle());
     }
     public void editLoc(View view) {
-        editTextField(view, "Change the location", "Locations", "Location", locList, new setLoc());
+        // Construct an intent for the place picker
+        try {
+            PlacePicker.IntentBuilder intentBuilder =
+                    new PlacePicker.IntentBuilder();
+            Intent intent = intentBuilder.build(this);
+            // Start the intent by requesting a result,
+            // identified by a request code.
+            startActivityForResult(intent, REQUEST_PLACE_PICKER);
+
+        } catch (GooglePlayServicesRepairableException e) {
+            GooglePlayServicesUtil
+                    .getErrorDialog(e.getConnectionStatusCode(), EventViewerActivity.this, 0);
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Toast.makeText(EventViewerActivity.this, "Google Play Services is not available.",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_PLACE_PICKER
+                && resultCode == Activity.RESULT_OK) {
+
+            // The user has selected a place. Extract the name and address.
+            final Place place = PlacePicker.getPlace(data, this);
+
+            final CharSequence name = place.getName();
+            final CharSequence address = place.getAddress();
+
+            loc = place.getId();
+            loc_text.setText(name + " (" + address + ")");
+
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
     public void editTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -315,12 +383,6 @@ public class EventViewerActivity extends Activity {
         }
     }
 
-    private class setLoc implements TextSetter {
-        public void call(String text) {
-            loc=text;
-            loc_text.setText(text);
-        }
-    }
     public void message(String msg) {
         Toast toast = Toast.makeText(EventViewerActivity.this, msg,
                 Toast.LENGTH_LONG);

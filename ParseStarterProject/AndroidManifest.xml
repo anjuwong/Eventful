@@ -24,6 +24,10 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCqpd-C8Wd0OqsOS8CMv7LAYevY-8GYDnk" />
+
         <activity android:name=".LoginActivity"
             android:label="@string/app_name" > 
             <intent-filter>
@@ -49,5 +53,7 @@
         </activity>
 
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

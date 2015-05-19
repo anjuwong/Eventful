@@ -2,18 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/ParseFacebookUtilsV4-1.9.1.jar"
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/classes.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
-        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-d59e603f7e2f41f152d36b862030860d57d51928.jar" />
-    </item>
-    <item
-        jar="/Users/derek/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-7b79542f9e872a145a8c95b53660c79d25103ff4.jar" />
+        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-46dac8af1e8aef2245ca865c815122de91aa9545.jar" />
     </item>
     <item
         jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
@@ -23,11 +16,144 @@
         <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-5072bb39224da48ecd8a531aec8b5c4f23687a5d.jar" />
     </item>
     <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="565a01f90f1529f73362707c4c185d0623a68782">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-0a61237054dbf8f34f20dd0d9457938cb17f0882.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-7b398fcc855ea276891d5267afcf471ebb4afa70.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-4518c1e7df11d3d4075b42cf71ad7aadf58eec5c.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-f5b3e0c9e8977d2e182dd148dd34159a7c4f1d6e.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-4b399abdd68943c8f474b4865be8f376c483e14d.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-6a0094f76cee521253b49daa14b1f8c954cab99c.jar" />
+    </item>
+    <item
+        jar="/Users/derek/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-7b79542f9e872a145a8c95b53660c79d25103ff4.jar" />
+    </item>
+    <item
         jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/Parse-1.9.1.jar"
         jumboMode="false"
         revision="22.0.0"
         sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
         <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/Parse-1.9.1-e0b0bd03bc8e4900a7e84a360de32752502d0bcf.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-fd703226eca30587ce0d2f8007f47604f996665d.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-ffd0f82119437c42912d97e18249bd705e2c7244.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-e4660f5875ec2aea52e61afcd53e3fe1374c30e5.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-c5f8c5a3f40e8e771b4ae6f680e971b015f90bd0.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-448fab2c8b98dea4ceb7377dd2d26d064834c32c.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-f8b218fc2c571214dab645e343885221d38f21c9.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-0ac3ba58b0fd671d79a8d32a926d2ecd4ba50925.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-acbd3ec2e248f24ca5b66cf99657a5ab62f52cba.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-21b3b39106965a1a6c160faf7ee90efbbf27e97b.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-53fe9662e1b33158ddfacc9312f73bf0e461ef3a.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/ParseFacebookUtilsV4-1.9.1.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-d59e603f7e2f41f152d36b862030860d57d51928.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-0f957e5b7d8ff61256401255c1d585d6e265c944.jar" />
     </item>
     <item
         jar="/Users/derek/Documents/Eventful/ParseStarterProject/libs/ParseCrashReporting-1.9.1.jar"
@@ -44,18 +170,32 @@
         <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-1119a77e68818b5b0ce076d5121f8f57c63145cd.jar" />
     </item>
     <item
-        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/classes.jar"
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/classes.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
-        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-7b398fcc855ea276891d5267afcf471ebb4afa70.jar" />
+        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-89c5893b0cc675ed07555a97dc2a9402fc4504c3.jar" />
     </item>
     <item
-        jar="/Users/derek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/classes.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-f8b218fc2c571214dab645e343885221d38f21c9.jar" />
+        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-04033664e9c2593f98fc0eece6c8a7f9d43deb86.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-047726c00e58e3babaddeb4e34f8e14b03e98667.jar" />
+    </item>
+    <item
+        jar="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
+        <dex dex="/Users/derek/Documents/Eventful/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-e5d279f879546c9b0ebfbcf83d7f93c6b6e62e7d.jar" />
     </item>
 
 </items>
