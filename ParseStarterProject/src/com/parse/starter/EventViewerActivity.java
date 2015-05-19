@@ -19,16 +19,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
-
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -46,24 +41,24 @@ public class EventViewerActivity extends Activity {
     /*
      * TODO: new Parse class: inviteList
      *  */
-    public ParseObject event;
-    public String userId;
-    public String eventId;
-    public String title;
-    public String loc;
-    public String creator;
-    public String inviteId; // use for when we implement saving lists of invited people
-    public int type;
-    public List<ParseObject> inviteList = new ArrayList<>();
-    public final List<String> titleList = new ArrayList<>();
-    public final List<String> locList = new ArrayList<>();
-    public Date datetime;
-    public Date emptyDate;
-    public TextView title_text;
-    public TextView loc_text;
-    public TextView time_text;
-    public EVFillerBehavior filler;
-    private GoogleApiClient mGoogleApiClient;
+    private ParseObject event;
+    private String userId;
+    private String eventId;
+    private String title;
+    private String loc;
+    private String locId;
+    private String creator;
+    private String inviteId; // use for when we implement saving lists of invited people
+    private int type;
+    private List<ParseObject> inviteList = new ArrayList<>();
+    private final List<String> titleList = new ArrayList<>();
+    private final List<String> locList = new ArrayList<>();
+    private Date datetime;
+    private Date emptyDate;
+    private TextView title_text;
+    private TextView loc_text;
+    private TextView time_text;
+    private EVFillerBehavior filler;
 
     /**
      * Request code passed to the PlacePicker intent to identify its result when it returns.
@@ -76,22 +71,19 @@ public class EventViewerActivity extends Activity {
         setContentView(R.layout.eventview);
         Intent intent = getIntent();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .build();
-        mGoogleApiClient.connect();
-
         eventId = intent.getStringExtra("EVENT_ID");
         getEvent(eventId);
         fillEvent();
     }
+
     public boolean verify() {
         if(title.equals("") ||
-           loc.equals("") ||
+           locId.equals("") ||
            datetime.equals(emptyDate)) // update when implementing invites
             return false;
         return true;
     }
+
     public void submit (View view) {
         /* TODO: make this part of the filler behavior
          * Guest's submit should only save votes
@@ -105,6 +97,7 @@ public class EventViewerActivity extends Activity {
         event.put("Title", title);
         event.put("Time", datetime);
         event.put("Location", loc);
+        event.put("LocationId", locId);
         event.put("Creator", creator);
         event.put("User", creator);
         event.put("Type", type);
@@ -124,6 +117,7 @@ public class EventViewerActivity extends Activity {
             saveLoc.put("User",userId);
             saveLoc.put("Type", type);
             saveLoc.put("Location",loc);
+            saveLoc.put("LocationId", locId);
             saveLoc.saveInBackground();
         }
         message("Saved!");
@@ -133,6 +127,7 @@ public class EventViewerActivity extends Activity {
     public void cancel (View view) {
         finish();
     }
+
     public void getEvent(String eventId) {
         userId = ParseUser.getCurrentUser().getObjectId();
         emptyDate = new Date();
@@ -144,6 +139,7 @@ public class EventViewerActivity extends Activity {
             type     = -1;
             title    = "";
             loc      = "";
+            locId    = "";
             datetime = emptyDate;
             inviteId = "";
 
@@ -171,12 +167,14 @@ public class EventViewerActivity extends Activity {
             }
             title    = event.getString("Title");
             loc      = event.getString("Location");
+            locId    = event.getString("LocationId");
             datetime = event.getDate("Time");
             type     = event.getInt("Type");
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
         }
     }
+
     public void fillEvent() {
         title_text = (TextView) findViewById(R.id.event_title);
         loc_text   = (TextView) findViewById(R.id.event_loc);
@@ -196,23 +194,8 @@ public class EventViewerActivity extends Activity {
 
         if(loc.equals(""))
             loc_text.setText("location");
-        else {
-            Places.GeoDataApi.getPlaceById(mGoogleApiClient, event.getString("Location"))
-                    .setResultCallback(new ResultCallback<PlaceBuffer>() {
-                        @Override
-                        public void onResult(PlaceBuffer places) {
-                            if (places.getStatus().isSuccess()) {
-                                final Place place = places.get(0);
-                                final CharSequence name = place.getName();
-                                final CharSequence address = place.getAddress();
-
-                                loc = place.getId();
-                                loc_text.setText(name + " (" + address + ")");
-                            }
-                            places.release();
-                        }
-                    });
-        }
+        else
+            loc_text.setText(loc);
 
         // TODO
         /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
@@ -235,7 +218,6 @@ public class EventViewerActivity extends Activity {
             filler = new GuestEVFillerBehavior();
         }
         filler.fillView(event, this);
-
     }
 
     private void editTextField(View view, String changePrompt, String tableName,
@@ -291,9 +273,11 @@ public class EventViewerActivity extends Activity {
         builder.create();
         final Dialog dialog = builder.show();
     }
+
     public void editTitle(View view) {
         editTextField(view, "Change the activity name", "Titles", "Title", titleList, new setTitle());
     }
+
     public void editLoc(View view) {
         // Construct an intent for the place picker
         try {
@@ -324,18 +308,28 @@ public class EventViewerActivity extends Activity {
             // The user has selected a place. Extract the name and address.
             final Place place = PlacePicker.getPlace(data, this);
 
-            final CharSequence name = place.getName();
-            final CharSequence address = place.getAddress();
+            locId = place.getId();
+            loc = getLocationDescriptor(place);
+            loc_text.setText(loc);
 
-            loc = place.getId();
-            loc_text.setText(name + " (" + address + ")");
-
+            String a = place.getName() + " (" + place.getAddress();
 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
+    private String getLocationDescriptor(Place place) {
+        final String name = place.getName().toString();
+        final String address = place.getAddress().toString();
+        String description = "";
+        if (address.toLowerCase().contains(name.toLowerCase()) || address.equals("")) {
+            description = address;
+        } else {
+            description = name + "\nAddress: " + address;
+        }
+        return description;
+    }
 
     public void editTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
@@ -368,12 +362,10 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
-
     public void editInvites(View view) {
         // TODO sets inviteList, creates InviteLists object, creates new Event objects for each user
 
     }
-
 
     // used to set text within other classes
     private class setTitle implements TextSetter {
