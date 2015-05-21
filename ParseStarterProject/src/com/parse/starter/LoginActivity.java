@@ -21,15 +21,10 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //If current user exists and is already linked to a FB account
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if ((currentUser != null) &&
-                currentUser.has("Name") &&
-                currentUser.has("FacebookID") &&
-                ParseFacebookUtils.isLinked(currentUser)) {
-            openMainPage();
-        } else {
+        if (isLoginNeeded()) {
             initLogin();
+        } else {
+            openMainPage();
         }
     }
 
@@ -58,7 +53,21 @@ public class LoginActivity extends Activity {
         });
     }
 
-    public void openMainPage() {
+    /*
+     * Check if the user needs to log in to Facebook.
+     */
+    private boolean isLoginNeeded() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+         return !((currentUser != null) &&
+                    currentUser.has("Name") &&
+                        currentUser.has("FacebookID") &&
+                            ParseFacebookUtils.isLinked(currentUser));
+    }
+
+    /*
+     * Open up the main view.
+     */
+    private void openMainPage() {
         Intent intent = new Intent(this, ParseStarterProjectActivity.class);
         startActivity(intent);
     }
