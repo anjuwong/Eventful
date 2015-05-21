@@ -6,8 +6,10 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -29,7 +31,8 @@ public class FacebookHelper {
     /*
      * Query the Facebook Graph API for the name and ID of the user.
      */
-    protected static void getNameAndId() {
+    protected void getNameAndId(final ParseUser parseUser) {
+
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -37,6 +40,8 @@ public class FacebookHelper {
                     public void onCompleted(JSONObject jsonObject, GraphResponse response) {
                         Log.d("GRAPH_REQUEST", "onCompleted jsonObject: " + jsonObject);
                         Log.d("GRAPH_REQUEST", "onCompleted response: " + response);
+
+                        storeNameAndId(parseUser, jsonObject);
                     }
                 });
 
@@ -47,13 +52,25 @@ public class FacebookHelper {
 
         // Execute the request in the background.
         request.executeAsync();
-        return;
+    }
+
+    /*
+     * Store the user's Facebook ID and Name in the Parse database.
+     */
+    private void storeNameAndId(ParseUser parseUser, JSONObject graphQueryResult) {
+        try {
+            parseUser.put("Name", graphQueryResult.get("name"));
+            parseUser.put("FacebookID", graphQueryResult.get("id"));
+            parseUser.saveInBackground();
+        } catch (JSONException e) {
+            Log.e("GRAPH_REQUEST", "Could not store the user's FacebookID and Name in Parse");
+        }
     }
 
     /*
      * Query the Facebook Graph API for the user's friends that also use Eventful.
      */
-    protected static void getFriendList() {
+    protected void getFriendList() {
         GraphRequest request = GraphRequest.newMyFriendsRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONArrayCallback() {
