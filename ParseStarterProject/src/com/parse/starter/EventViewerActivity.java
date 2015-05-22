@@ -363,7 +363,8 @@ public class EventViewerActivity extends Activity {
     }
 
     public void editInvites(View view) {
-        // TODO sets inviteList, creates InviteLists object, creates new Event objects for each user
+        InviteHelper inviteHelper = new InviteHelper();
+        inviteHelper.openInviteDialog(EventViewerActivity.this);
 
     }
 

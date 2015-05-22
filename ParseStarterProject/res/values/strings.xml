@@ -9,4 +9,6 @@
     <string name="app_name">Eventful</string>
     <string name="sample_title"></string>
     <string name="greeting">Your activities</string>
+
+    <string name="invite">Invite your friends!</string>
 </resources>

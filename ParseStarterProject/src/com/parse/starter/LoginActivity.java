@@ -24,6 +24,8 @@ public class LoginActivity extends Activity {
         if (isLoginNeeded()) {
             initLogin();
         } else {
+            // Query and store the list of friends
+            getFriendsList();
             openMainPage();
         }
     }
@@ -44,8 +46,9 @@ public class LoginActivity extends Activity {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if (user != null) {
-                    // Query and store the user's Facebook ID and Name
+                    // Query and store the user's Facebook ID, name, and friends list
                     getNameAndFacebookID();
+                    getFriendsList();
                     openMainPage();
                 }
 
@@ -78,5 +81,13 @@ public class LoginActivity extends Activity {
     private void getNameAndFacebookID() {
         FacebookHelper facebookHelper = FacebookHelper.getInstance();
         facebookHelper.getNameAndId(ParseUser.getCurrentUser());
+    }
+
+    /*
+     * Get and store the user's friend list. This is done every time the user starts the app.
+     */
+    private void getFriendsList() {
+        FacebookHelper facebookHelper = FacebookHelper.getInstance();
+        facebookHelper.getFriendList();
     }
 }

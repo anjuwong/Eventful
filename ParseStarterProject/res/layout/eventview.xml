@@ -43,12 +43,16 @@
         android:paddingTop="10sp"
         android:paddingBottom="10sp"/>
 
-    <GridView
-        android:id="@+id/invite_list"
+    <TextView
+        android:id="@+id/event_invite_list"
         android:layout_width="wrap_content"
-        android:layout_height="300sp"
-        android:numColumns="5"
-        />
+        android:layout_height="wrap_content"
+        android:text="@string/invite"
+        android:textSize="22sp"
+        android:clickable="true"
+        android:onClick="editInvites"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"/>
 
 
     <RelativeLayout

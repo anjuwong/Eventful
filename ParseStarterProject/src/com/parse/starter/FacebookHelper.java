@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Helper class to get a facebook user's name, profile picture, and friend list.
@@ -19,6 +22,7 @@ import org.json.JSONObject;
  */
 public class FacebookHelper {
 
+    private JSONArray friendList;
     private static FacebookHelper facebookHelper = new FacebookHelper();
 
     /* Make the constructor private so no other class can instantiate. */
@@ -70,7 +74,7 @@ public class FacebookHelper {
     /*
      * Query the Facebook Graph API for the user's friends that also use Eventful.
      */
-    protected void getFriendList() {
+    protected JSONArray getFriendList() {
         GraphRequest request = GraphRequest.newMyFriendsRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONArrayCallback() {
@@ -78,11 +82,32 @@ public class FacebookHelper {
                     public void onCompleted(JSONArray jsonArray, GraphResponse response) {
                         Log.d("GRAPH_REQUEST", "onCompleted jsonArray: " + jsonArray);
                         Log.d("GRAPH_REQUEST", "onCompleted response: " + response);
+
+                        storeFriendList(ParseUser.getCurrentUser(), jsonArray);
                     }
                 });
 
         request.executeAsync();
-        return;
+        return friendList;
+    }
+
+    private void storeFriendList(ParseUser parseUser, JSONArray graphQueryResult) {
+        List<JSONObject> friendJSONObjects = new ArrayList<JSONObject>();
+        for (int i = 0; i < graphQueryResult.length(); i++) {
+            try {
+                JSONObject friend = graphQueryResult.getJSONObject(i);
+                friendJSONObjects.add(friend);
+                /*String friendName = friend.getString("name");
+                String friendFacebookId = friend.getString("id");
+                friends.add(new FacebookFriend(friendName, friendFacebookId));*/
+            } catch (Exception e) {
+                Log.e("JSON_EXCEPTION", "Couldn't get friend from array of friends");
+            }
+
+        }
+
+        parseUser.put("friendJSONObjects", friendJSONObjects);
+        parseUser.saveInBackground();
 
     }
 
