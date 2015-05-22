@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,15 +40,18 @@ public class InviteHelper {
      * Utility method to parse the list of JSON Objects and get an array of friend names.
      */
     private String[] getFriendNames() {
-        List<JSONObject> friendJSONObjects =
-                (List<JSONObject>) ParseUser.getCurrentUser().get("friendJSONObjects");
+        List<HashMap<String, String>> friendJSONObjects =
+                (List<HashMap<String, String>>) ParseUser.getCurrentUser().get("friendJSONObjects");
 
         List<String> friendNameList = new ArrayList<String>();
-        for (JSONObject obj : friendJSONObjects) {
+
+        for (int i = 0; i < friendJSONObjects.size(); i++) {
             try {
-                friendNameList.add(obj.get("name").toString());
-            } catch (JSONException e) {
-                Log.e("JSON_EXCEPTION", "Couldn't get name from friend object");
+                HashMap<String, String> friendInfo = friendJSONObjects.get(i);
+                String name = friendInfo.get("name");
+                friendNameList.add(name);
+            } catch (Exception e) {
+                Log.e("EXCEPTION", "Couldn't get name from friend object");
             }
         }
 
