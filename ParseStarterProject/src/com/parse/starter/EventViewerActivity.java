@@ -363,8 +363,8 @@ public class EventViewerActivity extends Activity {
     }
 
     public void editInvites(View view) {
-        InviteHelper inviteHelper = new InviteHelper();
-        inviteHelper.openInviteDialog(EventViewerActivity.this);
+        InviteHelper inviteHelper = new InviteHelper(EventViewerActivity.this);
+        inviteHelper.openInviteDialog();
 
     }
 
