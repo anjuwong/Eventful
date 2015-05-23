@@ -3,7 +3,6 @@ package com.parse.starter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -22,12 +21,12 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //If current user exists and is already linked to a FB account
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-            openMainPage();
-        } else {
+        if (isLoginNeeded()) {
             initLogin();
+        } else {
+            // Query and store the list of friends
+            getFriendsList();
+            openMainPage();
         }
     }
 
@@ -37,6 +36,9 @@ public class LoginActivity extends Activity {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
+    /*
+     * Login to Facebook and store the user ID.
+     */
     public void initLogin() {
         List<String> permissions = Arrays.asList("public_profile", "email", "user_friends");
 
@@ -44,6 +46,9 @@ public class LoginActivity extends Activity {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if (user != null) {
+                    // Query and store the user's Facebook ID, name, and friends list
+                    getNameAndFacebookID();
+                    getFriendsList();
                     openMainPage();
                 }
 
@@ -51,8 +56,38 @@ public class LoginActivity extends Activity {
         });
     }
 
-    public void openMainPage() {
+    /*
+     * Check if the user needs to log in to Facebook.
+     */
+    private boolean isLoginNeeded() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+         return !((currentUser != null) &&
+                    currentUser.has("Name") &&
+                        currentUser.has("FacebookID") &&
+                            ParseFacebookUtils.isLinked(currentUser));
+    }
+
+    /*
+     * Open up the main view.
+     */
+    private void openMainPage() {
         Intent intent = new Intent(this, ParseStarterProjectActivity.class);
         startActivity(intent);
+    }
+
+    /*
+     * Check if the Facebook ID is stored in Parse. If not, get it.
+     */
+    private void getNameAndFacebookID() {
+        FacebookHelper facebookHelper = FacebookHelper.getInstance();
+        facebookHelper.getNameAndId(ParseUser.getCurrentUser());
+    }
+
+    /*
+     * Get and store the user's friend list. This is done every time the user starts the app.
+     */
+    private void getFriendsList() {
+        FacebookHelper facebookHelper = FacebookHelper.getInstance();
+        facebookHelper.getFriendList();
     }
 }
