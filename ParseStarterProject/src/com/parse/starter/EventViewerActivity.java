@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -41,6 +44,7 @@ public class EventViewerActivity extends Activity {
     /*
      * TODO: new Parse class: inviteList
      *  */
+    private boolean clone;
     private ParseObject event;
     private String userId;
     private String eventId;
@@ -71,7 +75,10 @@ public class EventViewerActivity extends Activity {
         setContentView(R.layout.eventview);
         Intent intent = getIntent();
 
-        eventId = intent.getStringExtra("EVENT_ID");
+        // EVENT_ID should be alpha-numeric; to get extra features, add non-[A-Z0-9] character
+        Bundle extras = intent.getExtras();
+        eventId = extras.getString("EVENT_ID");
+        clone = extras.getBoolean("CLONE");
         getEvent(eventId);
         fillEvent();
     }
@@ -152,6 +159,7 @@ public class EventViewerActivity extends Activity {
                     .setItems(actList, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             type = which;
+                            fillHeader();
                         }
                     });
             builder.create();
@@ -172,9 +180,39 @@ public class EventViewerActivity extends Activity {
             type     = event.getInt("Type");
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
+            if(clone) {
+                event = new ParseObject("Event");
+                datetime = emptyDate;
+            }
         }
     }
 
+    public void fillHeader() {
+        RelativeLayout header = (RelativeLayout)findViewById(R.id.event_header);
+        ImageView icon = (ImageView)findViewById(R.id.event_icon);
+        switch(type) {
+            case -1:
+                icon.setImageResource(R.drawable.ic_blank);
+                header.setBackgroundColor(Color.parseColor("#D9D9D9"));
+                break;
+            case 0:// food
+                icon.setImageResource(R.drawable.ic_food);
+                header.setBackgroundColor(Color.parseColor("#6AA84F"));
+                break;
+            case 1://workout
+                icon.setImageResource(R.drawable.ic_workout);
+                header.setBackgroundColor(Color.parseColor("#E69138"));
+                break;
+            case 2://chill
+                icon.setImageResource(R.drawable.ic_chill);
+                header.setBackgroundColor(Color.parseColor("#6D9EEB"));
+                break;
+            case 3://game
+                icon.setImageResource(R.drawable.ic_game);
+                header.setBackgroundColor(Color.parseColor("#E06666"));
+                break;
+        }
+    }
     public void fillEvent() {
         title_text = (TextView) findViewById(R.id.event_title);
         loc_text   = (TextView) findViewById(R.id.event_loc);
@@ -184,13 +222,13 @@ public class EventViewerActivity extends Activity {
             title_text.setText("activity name");
         }
         else {
-            title_text.setText(event.getString("Title"));
+            title_text.setText(title);
         }
 
         if(datetime.equals(emptyDate))
             time_text.setText("00/00/0000, 00:00");
         else
-            time_text.setText(event.getDate("Time").toString());
+            time_text.setText(datetime.toString());
 
         if(loc.equals(""))
             loc_text.setText("location");
@@ -204,7 +242,7 @@ public class EventViewerActivity extends Activity {
 
             // before adding a group, make sure it doesn't exist
         }*/
-
+        fillHeader();
         if (!datetime.equals(emptyDate) && datetime.before(new Date())) {
             // can't change time, loc, friends
             // can add photos, notes, etc.

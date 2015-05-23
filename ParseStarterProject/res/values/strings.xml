@@ -7,6 +7,6 @@
 
     <string name="hello">Your activities</string>
     <string name="app_name">Eventful</string>
-    <string name="sample_title"></string>
+    <string name="sample_title">activity name</string>
     <string name="greeting">Your activities</string>
 </resources>

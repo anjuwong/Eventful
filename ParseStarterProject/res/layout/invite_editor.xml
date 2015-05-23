@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Invite some friends!"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/center_point"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/center_point"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to remove"/>
+            <ListView
+                android:id="@+id/invite_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@id/center_point"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to invite"/>
+            <ListView
+                android:id="@+id/friend_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

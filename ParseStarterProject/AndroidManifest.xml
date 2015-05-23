@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.parse.starter"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -11,8 +12,9 @@
 
     <application
         android:name=".ParseApplication"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_eventful"
         android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light"
         android:allowBackup="true">
         <meta-data
             android:name="com.parse.APPLICATION_ID"
@@ -29,7 +31,7 @@
             android:value="AIzaSyCqpd-C8Wd0OqsOS8CMv7LAYevY-8GYDnk" />
 
         <activity android:name=".LoginActivity"
-            android:label="@string/app_name" > 
+            android:label="@string/app_name"> 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +51,7 @@
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name">
+            tools:ignore="NewApi">
         </activity>
 
     </application>

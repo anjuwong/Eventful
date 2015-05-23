@@ -1,6 +1,7 @@
 package com.parse.starter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import com.parse.starter.ListContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class ItemFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class ItemFragment extends Fragment /* implements AbsListView.OnItemLongClickListener */{
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String DESCRIPTIONS = "descriptions";
@@ -33,9 +34,12 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
 
     private ArrayList<String> mDescriptions;
     private ArrayList<String> mIDs;
+    private ArrayList<String> mLocs;
+    private ArrayList<String> mTitles;
+    private ArrayList<String> mDates;
 
     private OnFragmentInteractionListener mListener;
-
+    private OnLongFragmentInteractionListener mLongListener;
     /**
      * The fragment's ListView/GridView.
      */
@@ -47,13 +51,16 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     private ListAdapter mAdapter;
 
-    private ListContent mListContent;
+    //private ListContent mListContent;
+    private ArrayList<EventListItem> mListContent;
+    private ArrayList<Integer> mTypes;
 
-    public static ItemFragment newInstance(ArrayList<String> descriptions, ArrayList<String> ids) {
+    public static ItemFragment newInstance(ArrayList<String> descriptions, ArrayList<String> ids, ArrayList<Integer> types) {
         ItemFragment fragment = new ItemFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(DESCRIPTIONS, descriptions);
         args.putStringArrayList(IDS, ids);
+        args.putIntegerArrayList("types",types);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,24 +71,30 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     public ItemFragment() {
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mDescriptions = getArguments().getStringArrayList(DESCRIPTIONS);
+            //mDescriptions = getArguments().getStringArrayList(DESCRIPTIONS);
             mIDs = getArguments().getStringArrayList(IDS);
+            mLocs = getArguments().getStringArrayList("locs");
+            mTitles = getArguments().getStringArrayList("titles");
+            mDates = getArguments().getStringArrayList("dates");
+            mTypes = getArguments().getIntegerArrayList("types");
         }
 
-        mListContent = new ListContent();
+        //mListContent = new ListContent();
+        mListContent = new ArrayList<EventListItem>();
 
-        for (int i = 0; i < mDescriptions.size(); i++) {
-            mListContent.addItem(new ListContent.ListItem(mIDs.get(i), mDescriptions.get(i)));
+        for (int i = 0; i < mIDs.size(); i++) {
+            //mListContent.addItem(new ListContent.ListItem(mIDs.get(i), mTypes.get(i)+mDescriptions.get(i)));
+            mListContent.add(new EventListItem(mIDs.get(i), mTitles.get(i), mLocs.get(i), mDates.get(i), mTypes.get(i)));
         }
 
-        mAdapter = new ArrayAdapter<ListContent.ListItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, mListContent.ITEMS);
+        //mAdapter = new ArrayAdapter<ListContent.ListItem>(getActivity(),
+        //        R.layout.main_row, R.id.main_row_text, mListContent.ITEMS);
+        mAdapter = new EventListAdapter(getActivity(), R.layout.fragment_item_list, mListContent);
     }
 
     @Override
@@ -94,7 +107,25 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(mListener != null)
+                    mListener.onFragmentInteraction(mListContent.get(position).id);
+            }
+        });
+        // make these data members
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (null != mLongListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mLongListener.onLongFragmentInteraction(mListContent.get(position).id);
+                }
+                return true;
+            }
+        });
 
         return view;
     }
@@ -104,6 +135,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            mLongListener = (OnLongFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -114,17 +146,18 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mLongListener = null;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    /*public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(mListContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(mListContent.get(position).id);
+            //TODO: onLongItemClick
         }
     }
-
+    */
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -138,6 +171,17 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         }
     }
 
+/*    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        if (null != mLongListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            mLongListener.onLongFragmentInteraction(mListContent.get(position).id);
+            //TODO: onLongItemClick
+        }
+        return true;
+    }
+*/
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -150,6 +194,9 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String id);
+    }
+    public interface OnLongFragmentInteractionListener {
+        void onLongFragmentInteraction(String id);
     }
 
 }

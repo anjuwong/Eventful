@@ -16,11 +16,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 public class ParseStarterProjectActivity extends FragmentActivity
-		implements ItemFragment.OnFragmentInteractionListener {
+		implements ItemFragment.OnLongFragmentInteractionListener, ItemFragment.OnFragmentInteractionListener {
 	private FragmentTabHost mTabHost;
 	private int mReloadCount = 1;
     private int currentTypeFilter = 4;
@@ -78,15 +81,48 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 	public ArrayList<String> getDescriptions(List<ParseObject> events) {
 		ArrayList<String> descriptions = new ArrayList<>();
+		ArrayList<EventListItem> eventAttribs = new ArrayList<>();
 		String description;
 		for (int i = 0; i < events.size(); i++) {
 			ParseObject event = events.get(i);
 			description = event.getString("Title") +
 					"\nLocation: " + event.getString("Location") +
 					"\nTime: " + event.getDate("Time").toString();
+			//eventAttribs.add(new EventListItem("",event.getString("Title"),event.getString("Location"), event.getDate("Time"), event.getInt("Type")));
 			descriptions.add(description);
 		}
 		return descriptions;
+	}
+	public ArrayList<String> getLocs(List<ParseObject> events) {
+		ArrayList<String> locs = new ArrayList<>();
+		for (int i = 0; i < events.size(); i++) {
+			ParseObject event = events.get(i);
+			locs.add(event.getString("Location"));
+		}
+		return locs;
+	}
+	public ArrayList<String> getDates(List<ParseObject> events) {
+		ArrayList<String> dates = new ArrayList<>();
+		for (int i = 0; i < events.size(); i++) {
+			ParseObject event = events.get(i);
+			dates.add(event.getDate("Time").toString());
+		}
+		return dates;
+	}
+	public ArrayList<String> getTitles(List<ParseObject> events) {
+		ArrayList<String> titles = new ArrayList<>();
+		for (int i = 0; i < events.size(); i++) {
+			ParseObject event = events.get(i);
+			titles.add(event.getString("Title"));
+		}
+		return titles;
+	}
+	public ArrayList<Integer> getTypes(List<ParseObject> events) {
+		ArrayList<Integer> types = new ArrayList<>();
+		for (int i = 0; i < events.size(); i++) {
+			types.add(events.get(i).getInt("Type"));
+		}
+		return types;
 	}
 
 	public ArrayList<String> getIDs(List<ParseObject> events) {
@@ -97,10 +133,14 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return ids;
 	}
 
-	public Bundle genBundle(ArrayList<String> descriptions, ArrayList<String> ids) {
+	public Bundle genBundle(ArrayList<String> ids, ArrayList<String> titles, ArrayList<String> locs, ArrayList<String> dates, ArrayList<Integer> types) {
 		Bundle bundle = new Bundle();
-		bundle.putStringArrayList("descriptions", descriptions);
+		//bundle.putStringArrayList("descriptions", descriptions);
+		bundle.putStringArrayList("dates", dates);
+		bundle.putStringArrayList("locs", locs);
+		bundle.putStringArrayList("titles", titles);
 		bundle.putStringArrayList("ids", ids);
+		bundle.putIntegerArrayList("types", types);
 		return bundle;
 	}
 
@@ -131,16 +171,16 @@ public class ParseStarterProjectActivity extends FragmentActivity
         List<Event> pastEventsBeforeFilter = PastEvent.getPastEvents(allEvents);
         List<ParseObject> pastEvents = filterEvents(pastEventsBeforeFilter);
 
-        Bundle allEventsBundle = genBundle(getDescriptions(allEvents), getIDs(allEvents));
-        Bundle futureEventsBundle = genBundle(getDescriptions(futureEvents), getIDs(futureEvents));
-        Bundle pastEventsBundle = genBundle(getDescriptions(pastEvents), getIDs(pastEvents));
+        Bundle allEventsBundle = genBundle(getIDs(allEvents), getTitles(allEvents), getLocs(allEvents), getDates(allEvents), getTypes(allEvents));
+        Bundle futureEventsBundle = genBundle(getIDs(futureEvents), getTitles(futureEvents), getLocs(futureEvents), getDates(futureEvents), getTypes(futureEvents));
+        Bundle pastEventsBundle = genBundle(getIDs(pastEvents), getTitles(pastEvents), getLocs(pastEvents), getDates(pastEvents), getTypes(pastEvents));
 
         mTabHost.addTab(mTabHost.newTabSpec("a" + mReloadCount).setIndicator("All Events"),
-                ItemFragment.class, allEventsBundle);
+				ItemFragment.class, allEventsBundle);
         mTabHost.addTab(mTabHost.newTabSpec("f" + mReloadCount).setIndicator("Future Events"),
                 ItemFragment.class, futureEventsBundle);
         mTabHost.addTab(mTabHost.newTabSpec("p" + mReloadCount).setIndicator("Past Events"),
-                ItemFragment.class, pastEventsBundle);
+				ItemFragment.class, pastEventsBundle);
 
         mReloadCount++;
 
@@ -152,18 +192,32 @@ public class ParseStarterProjectActivity extends FragmentActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(ParseStarterProjectActivity.this);
         builder.setTitle("Choose an Activity")
                 .setItems(actList, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        currentTypeFilter = which;
-                        reloadEvents();
-                    }
-                });
+					public void onClick(DialogInterface dialog, int which) {
+						currentTypeFilter = which;
+						reloadEvents();
+					}
+				});
         builder.create();
         builder.show();
     }
 
 	public void onFragmentInteraction(String id) {
 		Intent intent = new Intent(this, EventViewerActivity.class);
-		intent.putExtra("EVENT_ID", id);
+		Bundle extras = new Bundle();
+		extras.putString("EVENT_ID", id);
+		extras.putBoolean("CLONE", false);
+		//intent.putExtra("EVENT_ID", id);
+		intent.putExtras(extras);
+		startActivity(intent);
+	}
+
+	public void onLongFragmentInteraction(String id) {
+		Intent intent = new Intent(this, EventViewerActivity.class);
+		Bundle extras = new Bundle();
+		extras.putString("EVENT_ID", id);
+		extras.putBoolean("CLONE", true);
+		//intent.putExtra("EVENT_ID", id);
+		intent.putExtras(extras);
 		startActivity(intent);
 	}
 
@@ -181,5 +235,6 @@ public class ParseStarterProjectActivity extends FragmentActivity
 
 	@Override
 	public void onBackPressed() {}
+
 
 }

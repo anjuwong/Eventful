@@ -23,9 +23,13 @@ public class OwnerEVFillerBehavior implements EVFillerBehavior {
         TextView time_text = (TextView) parent.findViewById(R.id.event_time);
         TextView loc_text = (TextView) parent.findViewById(R.id.event_loc);
 
-        title_text.setTextColor(Color.YELLOW);
-        title_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
-        title_text.setAllCaps(true);
+        //title_text.setTextColor(Color.YELLOW);
+        //title_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+        try {
+         //   title_text.setAllCaps(true);
+        } catch (Exception e) {
+            // do nothing
+        }
 
         time_text.setTextColor(Color.YELLOW);
         time_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));

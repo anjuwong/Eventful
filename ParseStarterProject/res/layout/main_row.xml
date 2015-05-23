@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/ic"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingRight="20sp"
+        android:paddingLeft="20sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+        android:src="@drawable/ic_blank"></ImageView>
+    <LinearLayout
+        android:layout_toRightOf="@id/ic"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/main_row_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Event Title"/>
+        <TextView
+            android:id="@+id/main_row_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: ???"/>
+        <TextView
+            android:id="@+id/main_row_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:00/00 0:00"/>
+    </LinearLayout>
+    <!--<ImageView
+        android:src="@drawable/ic_clone"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="20sp"
+        android:layout_gravity="center"/>
+     -->
+</RelativeLayout>
