@@ -41,9 +41,6 @@ import java.util.List;
  */
 public class EventViewerActivity extends Activity {
 
-    /*
-     * TODO: new Parse class: inviteList
-     *  */
     private boolean clone;
     private ParseObject event;
     private String userId;
@@ -64,8 +61,7 @@ public class EventViewerActivity extends Activity {
     private TextView time_text;
     private EVFillerBehavior filler;
 
-    /**
-     * Request code passed to the PlacePicker intent to identify its result when it returns.
+    /* Request code passed to the PlacePicker intent to identify its result when it returns.
      */
     private static final int REQUEST_PLACE_PICKER = 1;
 
@@ -83,6 +79,7 @@ public class EventViewerActivity extends Activity {
         fillEvent();
     }
 
+    /* Verifies that the inputs are not default */
     public boolean verify() {
         if(title.equals("") ||
            locId.equals("") ||
@@ -91,6 +88,9 @@ public class EventViewerActivity extends Activity {
         return true;
     }
 
+    /* If verified, puts parameters into the event object and pushes
+     * If title or location or (TODO: invite list) are new, push as well
+     */
     public void submit (View view) {
         /* TODO: make this part of the filler behavior
          * Guest's submit should only save votes
@@ -100,7 +100,6 @@ public class EventViewerActivity extends Activity {
             message("Please fill out activity name, location, and time!");
             return;
         }
-        // TODO: make sure that title, datetime, loc are valid (not default)
         event.put("Title", title);
         event.put("Time", datetime);
         event.put("Location", loc);
@@ -135,10 +134,16 @@ public class EventViewerActivity extends Activity {
         finish();
     }
 
+    /* Takes the input eventId and queries for that event
+     * If empty-string as input, create a new parse object and create dialog to get the type
+     * Otherwise, get and record all of the event's attributes
+     * If the event is a cloned event, create a new parse object instead of using the old  object
+     */
     public void getEvent(String eventId) {
         userId = ParseUser.getCurrentUser().getObjectId();
         emptyDate = new Date();
         emptyDate.setTime(0);
+
         if (eventId.equals("")) {
             // Nothing passed, create new event with default parameters
             event    = new ParseObject("Event");
@@ -160,6 +165,8 @@ public class EventViewerActivity extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             type = which;
                             fillHeader();
+                            getPreviousEntries("Titles", "Title", titleList);
+                            getPreviousEntries("Locations", "Location", locList);
                         }
                     });
             builder.create();
@@ -180,13 +187,17 @@ public class EventViewerActivity extends Activity {
             type     = event.getInt("Type");
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
+            getPreviousEntries("Titles", "Title", titleList);
+            getPreviousEntries("Locations", "Location", locList);
             if(clone) {
                 event = new ParseObject("Event");
                 datetime = emptyDate;
             }
         }
-    }
 
+    }
+    /* Changes the icon of the eventView and makes the header color match the image
+     */
     public void fillHeader() {
         RelativeLayout header = (RelativeLayout)findViewById(R.id.event_header);
         ImageView icon = (ImageView)findViewById(R.id.event_icon);
@@ -213,6 +224,10 @@ public class EventViewerActivity extends Activity {
                 break;
         }
     }
+
+    /* Fills the view's text fields, handling default values accordingly
+     * Uses EVFillerBehaviors to define different clickable levels
+     */
     public void fillEvent() {
         title_text = (TextView) findViewById(R.id.event_title);
         loc_text   = (TextView) findViewById(R.id.event_loc);
@@ -234,7 +249,6 @@ public class EventViewerActivity extends Activity {
             loc_text.setText("location");
         else
             loc_text.setText(loc);
-
         // TODO
         /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
         if(!eventInfo.getJSONArray("InviteListId").equals("")) {
@@ -244,49 +258,54 @@ public class EventViewerActivity extends Activity {
         }*/
         fillHeader();
         if (!datetime.equals(emptyDate) && datetime.before(new Date())) {
-            // can't change time, loc, friends
-            // can add photos, notes, etc.
             filler = new ExpiredEVFillerBehavior();
         } else if (userId.equals(creator)) {
-            // can change time, loc, friends, etc.
             filler = new OwnerEVFillerBehavior();
         } else {
-            // can't change time, loc, friends
-            // can submit other times and locs
             filler = new GuestEVFillerBehavior();
         }
         filler.fillView(event, this);
     }
 
-    private void editTextField(View view, String changePrompt, String tableName,
-                                              String attribute, final List<String> list, final TextSetter setText) {
-        // Creates a new dialogBuilder for setting text, queries for a given attribute, and fills UI
-        // list contains previously submitted attributes for the same event type
-        // setText allows onClickListener to set specific text fields
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
-        LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-
-        final View layout = inflater.inflate(R.layout.title_editor, null);
-        ((TextView)(layout.findViewById(R.id.changeprompt))).setText(changePrompt);
+    /* Queries <tableName> Parse table for <attribute> that match the userId and type
+     * Fills list with entries (clears first)
+     */
+    private void getPreviousEntries(String tableName, String attribute, final List<String> list) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(tableName);
 
         query.whereEqualTo("User", userId);
-        query.whereEqualTo("Type",type);
+        query.whereEqualTo("Type", type);
         ArrayList<ParseObject> objectList = new ArrayList<ParseObject>();
         try {
             objectList = (ArrayList) query.find();
         } catch (com.parse.ParseException e) {
             message("Error retrieving records");
         }
-
         list.clear();
         for (ParseObject o: objectList) {
             list.add(o.getString(attribute));
         }
+    }
+
+    /* Creates a new dialogBuilder for setting fields and allows reuse of old entries
+     * list contains previously submitted entries for the same event type
+     * setText allows onClickListener to set specific text fields
+     */
+    private void editTextField(String changePrompt, final List<String> list, final TextSetter setText) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+        LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        final View layout = inflater.inflate(R.layout.title_editor, null);
+        ((TextView)(layout.findViewById(R.id.changeprompt))).setText(changePrompt);
         ListAdapter listAdapter = new ArrayAdapter<String>(EventViewerActivity.this, R.layout.row, list);
         ListView lv = (ListView) layout.findViewById(R.id.edit_list);
+
+        if(false) {
+            // do stuff for locations only
+        }
+
+        /* If click on old entry, set text to that entry */
         lv.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -295,12 +314,12 @@ public class EventViewerActivity extends Activity {
 
         });
         lv.setAdapter(listAdapter);
+        /* When finished, set the text of the EventViewer to the new text (done using setText.call()) */
         builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (!((EditText) layout.findViewById(R.id.edittext)).getText().toString().equals("")) {
                     setText.call(((EditText) layout.findViewById(R.id.edittext)).getText().toString());
-                    //((TextView) findViewById(R.id.event_title)).setText(title);
                 }
             }
         })
@@ -313,10 +332,31 @@ public class EventViewerActivity extends Activity {
     }
 
     public void editTitle(View view) {
-        editTextField(view, "Change the activity name", "Titles", "Title", titleList, new setTitle());
+        editTextField("Change the activity name", titleList, new setTitle());
     }
 
     public void editLoc(View view) {
+        //editTextField("Change the location", locList, new setLoc());
+        // Construct an intent for the place picker
+        try {
+            PlacePicker.IntentBuilder intentBuilder =
+                    new PlacePicker.IntentBuilder();
+            Intent intent = intentBuilder.build(this);
+            // Start the intent by requesting a result,
+            // identified by a request code.
+            startActivityForResult(intent, REQUEST_PLACE_PICKER);
+
+        } catch (GooglePlayServicesRepairableException e) {
+            GooglePlayServicesUtil
+                    .getErrorDialog(e.getConnectionStatusCode(), EventViewerActivity.this, 0);
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Toast.makeText(EventViewerActivity.this, "Google Play Services is not available.",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    public void editAddress(View view) {
         // Construct an intent for the place picker
         try {
             PlacePicker.IntentBuilder intentBuilder =
@@ -346,6 +386,7 @@ public class EventViewerActivity extends Activity {
             // The user has selected a place. Extract the name and address.
             final Place place = PlacePicker.getPlace(data, this);
 
+            // TODO: change to address
             locId = place.getId();
             loc = getLocationDescriptor(place);
             loc_text.setText(loc);
@@ -376,7 +417,6 @@ public class EventViewerActivity extends Activity {
         builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
                 TimePicker tp = (TimePicker)layout.findViewById(R.id.edit_time);
                 DatePicker dp = (DatePicker)layout.findViewById(R.id.edit_date);
                 Calendar cal = Calendar.getInstance();
@@ -411,6 +451,15 @@ public class EventViewerActivity extends Activity {
         public void call(String text) {
             title=text;
             title_text.setText(text);
+        }
+    }
+    private class setLoc implements TextSetter {
+        public void call(String text) {
+            loc=text;
+            loc_text.setText(text);
+            // TODO:
+            // ((TextView)findViewById(R.id.event_address)).setText("");
+            // address = "";
         }
     }
 

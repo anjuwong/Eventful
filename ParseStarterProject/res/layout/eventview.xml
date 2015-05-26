@@ -28,31 +28,90 @@
             android:clickable="true"
             android:paddingBottom="10sp"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/event_loc"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:clickable="true"
-        android:onClick="editLoc"
-        android:textSize="25sp" />
-    <TextView
-        android:id="@+id/event_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/greeting"
-        android:textSize="22sp"
-        android:clickable="true"
-        android:onClick="editTime"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"/>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textStyle="bold"/>
+            <TextView
+                android:paddingTop="20sp"
+                android:id="@+id/event_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="location"
+                android:clickable="true"
+                android:onClick="editLoc" />
+
+        </LinearLayout>
+        <!-- <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textStyle="bold"/>
+            <TextView
+                android:paddingTop="20sp"
+                android:id="@+id/event_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="address"/>
+        </LinearLayout> -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textStyle="bold"
+                android:paddingBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"
+                android:clickable="true"
+                android:onClick="editTime"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <TextView
+        android:paddingLeft="20sp"
+        android:paddingTop="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Who's invited"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:paddingLeft="20sp"
         android:id="@+id/event_invite_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/invite"
-        android:textSize="22sp"
         android:clickable="true"
         android:onClick="editInvites"
         android:paddingTop="10sp"
