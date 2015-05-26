@@ -31,6 +31,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +43,7 @@ import java.util.List;
  */
 public class EventViewerActivity extends Activity {
 
+    private InviteHelper inviteHelper;
     /*
      * TODO: new Parse class: inviteList
      *  */
@@ -54,7 +57,13 @@ public class EventViewerActivity extends Activity {
     private String creator;
     private String inviteId; // use for when we implement saving lists of invited people
     private int type;
-    private List<ParseObject> inviteList = new ArrayList<>();
+
+    /** Invitation stuff */
+    private List<String> savedInvitedParseIds = new ArrayList<>();
+    private List<String> attendingParseIds = new ArrayList<>();
+    private List<String> notAttendingParseIds = new ArrayList<>();
+
+
     private final List<String> titleList = new ArrayList<>();
     private final List<String> locList = new ArrayList<>();
     private Date datetime;
@@ -81,6 +90,11 @@ public class EventViewerActivity extends Activity {
         clone = extras.getBoolean("CLONE");
         getEvent(eventId);
         fillEvent();
+
+        List<String> invitedParseIds = (List<String>) event.get(ParseConstants.InvitedParseIds);
+        savedInvitedParseIds.addAll(invitedParseIds);
+
+        inviteHelper = new InviteHelper(EventViewerActivity.this, invitedParseIds);
     }
 
     public boolean verify() {
@@ -108,6 +122,12 @@ public class EventViewerActivity extends Activity {
         event.put("Creator", creator);
         event.put("User", creator);
         event.put("Type", type);
+
+        // Get the invite list
+        savedInvitedParseIds.addAll(inviteHelper.getInvitedParseIds());
+        event.put(ParseConstants.InvitedParseIds, savedInvitedParseIds);
+
+        inviteHelper.resetInviteHelper(savedInvitedParseIds);
 
         event.saveInBackground();
 
@@ -401,7 +421,6 @@ public class EventViewerActivity extends Activity {
     }
 
     public void editInvites(View view) {
-        InviteHelper inviteHelper = new InviteHelper(EventViewerActivity.this);
         inviteHelper.openInviteDialog();
 
     }

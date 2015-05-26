@@ -4,14 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,29 +18,47 @@ public class InviteHelper {
 
     private final Context context;
 
-    /* Array of all the names of the user's friends. */
-    private final String[] friendNames;
+    /* Array of all the names of the user's friends who have NOT been invited. */
+    private List<String> friendNames;
+
+    /* Maps a parse user's id to their name. */
+    private HashMap<String, String> parseIdToNameMap;
+
+    /* Maps a parse user's name to their id */
+    private HashMap<String, String> nameToParseIdMap;
 
     /* Holds the indices in the friendNames array of invited friends. */
     private ArrayList<Integer> invitedFriendIndices;
 
-    public InviteHelper (Context context) {
+    /* Holds the parse ids of the invited friends. */
+    private ArrayList<String> invitedParseIds;
+
+
+    public InviteHelper (Context context, List<String> alreadyInvitedParseIds) {
         this.context = context;
+        this.parseIdToNameMap = new HashMap<String, String>();
+        this.nameToParseIdMap = new HashMap<String, String>();
         this.friendNames = getFriendNames();
         this.invitedFriendIndices = new ArrayList<Integer>();
+        this.invitedParseIds = new ArrayList<String>();
+
+
+        // hacky
+        resetInviteHelper(alreadyInvitedParseIds);
     }
 
     /*
      * Builds and opens up the invite dialog popup.
      */
     public void openInviteDialog() {
-        boolean[] isCheckedArr = new boolean[friendNames.length];
+        boolean[] isCheckedArr = new boolean[friendNames.size()];
+        String[] friendNamesArr = new String[friendNames.size()];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         // TODO(abby): Put this title in the strings.xml file
         builder.setTitle("Invite your friends")
-                .setMultiChoiceItems(friendNames, isCheckedArr, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(friendNames.toArray(friendNamesArr), isCheckedArr, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
                         if (isChecked) {
@@ -58,15 +70,31 @@ public class InviteHelper {
                         }
                     }
                 })
-                .setPositiveButton("OK", testCheckboxSelection());
+                .setPositiveButton("OK", saveCheckboxSelection());
         builder.create();
         builder.show();
     }
 
     /*
+        Resets the invite helper once the event is saved.
+        Clears the list of invited parse user ids and the list of indices.
+        Filters the array of friend names to contain only the ones that haven't been invited yet
+     */
+    public void resetInviteHelper(List<String> savedInvitedParseIds) {
+        invitedParseIds.clear();
+        invitedFriendIndices.clear();
+
+        List<String> invitedFriendNames = new ArrayList<String>();
+        for (String id : savedInvitedParseIds) {
+            invitedFriendNames.add(parseIdToNameMap.get(id));
+        }
+
+        friendNames.removeAll(invitedFriendNames);
+    }
+    /*
      * Utility method to parse the list of JSON Objects and get an array of friend names.
      */
-    private String[] getFriendNames() {
+    private List<String> getFriendNames() {
         List<HashMap<String, String>> friendJSONObjects =
                 (List<HashMap<String, String>>) ParseUser.getCurrentUser().get("friendJSONObjects");
 
@@ -77,22 +105,48 @@ public class InviteHelper {
                 HashMap<String, String> friendInfo = friendJSONObjects.get(i);
                 String name = friendInfo.get("name");
                 friendNameList.add(name);
+
+                // Update the map of parse ids to name
+                String id = friendInfo.get("id");
+                parseIdToNameMap.put(id, name);
+                nameToParseIdMap.put(name, id);
+
             } catch (Exception e) {
                 Log.e("EXCEPTION", "Couldn't get name from friend object");
             }
         }
 
-        String[] friendNameArray = new String[friendNameList.size()];
-        friendNameArray = friendNameList.toArray(friendNameArray);
+        return friendNameList;
 
-        return friendNameArray;
+    }
+
+    /*
+      Returns the parse ids of the invited users. This includes users who have already clicked
+      attending or not attending.
+     */
+    public List<String> getInvitedParseIds() {
+
+        return invitedParseIds;
+    }
+
+    private DialogInterface.OnClickListener saveCheckboxSelection() {
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int i = 0; i < invitedFriendIndices.size(); i++) {
+                    invitedParseIds.add(nameToParseIdMap.get(friendNames.get(i)));
+                }
+            }
+        };
+
+        return listener;
 
     }
 
     /*
      * Utility method to show Toast popup - used for debugging OK button.
      */
-     private DialogInterface.OnClickListener testCheckboxSelection() {
+     /*private DialogInterface.OnClickListener testCheckboxSelection() {
          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
              @Override
              public void onClick(DialogInterface dialog, int which) {
@@ -107,5 +161,5 @@ public class InviteHelper {
          };
 
          return listener;
-     }
+     }*/
 }
