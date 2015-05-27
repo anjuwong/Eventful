@@ -1,8 +1,13 @@
 package com.parse.starter;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -89,5 +94,34 @@ public class LoginActivity extends Activity {
     private void getFriendsList() {
         FacebookHelper facebookHelper = FacebookHelper.getInstance();
         facebookHelper.getFriendList();
+    }
+
+    private void createNotification(String title, String msg) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_stat_name)
+                        .setContentTitle(title)
+                        .setAutoCancel(true)
+                        .setContentText(msg);
+
+        Intent notifyIntent =
+                new Intent(this, ParseStarterProjectActivity.class);
+        // Sets the Activity to start in a new, empty task
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // Creates the PendingIntent
+        PendingIntent notifyPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        notifyIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+        mBuilder.setContentIntent(notifyPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }
