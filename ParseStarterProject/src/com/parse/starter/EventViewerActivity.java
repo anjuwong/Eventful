@@ -352,7 +352,7 @@ public class EventViewerActivity extends Activity {
 
         /* If the inviteList already exists in the DB, get its objectId and set inviteId to it */
         String matchingInviteId = listInListList(inviteListList, fullInvitedParseIds);
-        if (matchingInviteId.equals("") || clone) {
+        if (matchingInviteId.equals("")) {
             for(String id:fullInvitedParseIds) {
                 Log.v("Debug", id);
             }
