@@ -22,31 +22,23 @@ public class OwnerEVFillerBehavior implements EVFillerBehavior {
         TextView title_text = (TextView) parent.findViewById(R.id.event_title);
         TextView time_text = (TextView) parent.findViewById(R.id.event_time);
         TextView loc_text = (TextView) parent.findViewById(R.id.event_loc);
+        ((TextView) parent.findViewById(R.id.event_host)).setText("you");
 
-        //title_text.setTextColor(Color.YELLOW);
-        //title_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
-        try {
-         //   title_text.setAllCaps(true);
-        } catch (Exception e) {
-            // do nothing
-        }
 
-        time_text.setTextColor(Color.YELLOW);
+        time_text.setTextColor(Color.BLUE);
         time_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
-        loc_text.setTextColor(Color.YELLOW);
-        loc_text.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.BOLD));
+        loc_text.setTextColor(Color.BLUE);
+        loc_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
-        //TODO: add voting dialog (onLongClick)
+        // Do not display the RSVP option
+        TextView rsvp_button = (TextView) parent.findViewById(R.id.rsvp_button);
+        rsvp_button.setClickable(false);
+        rsvp_button.setHeight(0);
+        rsvp_button = (TextView) parent.findViewById(R.id.rsvp_text);
+        rsvp_button.setHeight(0);
 
-        // TODO
-        /*ListView invite_list = (ListView) parent.findViewById(R.id.invite_list);
-        if(!eventInfo.getJSONArray("InviteListId").equals("")) {
-            // search for inviteListId
 
-            // before adding a group, make sure it doesn't exist
-        }
-        Log.v("Debugging","FRIENDS ADDED");*/
 
     }
 }
