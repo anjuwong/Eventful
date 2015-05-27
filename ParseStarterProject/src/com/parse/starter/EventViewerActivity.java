@@ -92,7 +92,11 @@ public class EventViewerActivity extends Activity {
         fillEvent();
 
         List<String> invitedParseIds = (List<String>) event.get(ParseConstants.InvitedParseIds);
-        savedInvitedParseIds.addAll(invitedParseIds);
+        if (invitedParseIds != null) {
+            savedInvitedParseIds.addAll(invitedParseIds);
+        } else {
+            invitedParseIds = new ArrayList<String>();
+        }
 
         inviteHelper = new InviteHelper(EventViewerActivity.this, invitedParseIds);
     }
