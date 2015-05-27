@@ -18,9 +18,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ParseStarterProjectActivity extends FragmentActivity
@@ -182,6 +184,8 @@ public class ParseStarterProjectActivity extends FragmentActivity
                 ItemFragment.class, futureEventsBundle);
         mTabHost.addTab(mTabHost.newTabSpec("p" + mReloadCount).setIndicator("Past Events"),
 				ItemFragment.class, pastEventsBundle);
+
+		TextView textView = (TextView) mTabHost.getTabWidget().getChildAt(1) .findViewById(android.R.id.title); textView.setGravity(Gravity.CENTER);
 
         mReloadCount++;
 
