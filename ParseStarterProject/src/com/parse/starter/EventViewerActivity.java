@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +23,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,7 +67,6 @@ public class EventViewerActivity extends Activity {
     private List<String> savedInvitedParseIds = new ArrayList<>();
     private List<String> attendingParseIds = new ArrayList<>();
     private List<String> notAttendingParseIds = new ArrayList<>();
-
 
     private final List<String> titleList = new ArrayList<>();
     private final List<String> locList = new ArrayList<>();
@@ -369,12 +373,9 @@ public class EventViewerActivity extends Activity {
 
             // The user has selected a place. Extract the name and address.
             final Place place = PlacePicker.getPlace(data, this);
-
             locId = place.getId();
             loc = getLocationDescriptor(place);
             loc_text.setText(loc);
-
-            String a = place.getName() + " (" + place.getAddress();
 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -441,5 +442,32 @@ public class EventViewerActivity extends Activity {
         Toast toast = Toast.makeText(EventViewerActivity.this, msg,
                 Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public void navigate(View view) {
+        if (locId.equals(""))
+            return;
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        googleApiClient.connect();
+        Places.GeoDataApi.getPlaceById(googleApiClient, locId)
+                .setResultCallback(new ResultCallback<PlaceBuffer>() {
+                    @Override
+                    public void onResult(PlaceBuffer places) {
+                        if (places.getStatus().isSuccess()) {
+                            LatLng location = places.get(0).getLatLng();
+                            String searchString =
+                                    "google.navigation:q="
+                                    + location.latitude + ","
+                                    + location.longitude;
+                            Uri gmmIntentUri = Uri.parse(searchString);
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            EventViewerActivity.this.startActivity(mapIntent);
+                        }
+                        places.release();
+                    }
+                });
     }
 }
