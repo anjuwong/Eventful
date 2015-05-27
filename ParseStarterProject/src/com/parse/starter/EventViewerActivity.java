@@ -386,6 +386,14 @@ public class EventViewerActivity extends Activity {
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
+
+        // TODO NEIL Create Notification here?
+        String notifyMsg = "Event " + "\'" + title + "\'" + " scheduled for " + datetime;
+        EventfulNotification.scheduleNotification(this.getApplicationContext(),
+                EventfulNotification.createNotification(this.getApplicationContext(), "Upcoming Event!", notifyMsg),
+                eventId.hashCode(),
+                (int)(datetime.getTime() - System.currentTimeMillis() - 60*30*1000));
+
         finish();
     }
     /* Verifies that the inputs are not default */

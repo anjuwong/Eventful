@@ -42,14 +42,14 @@ public class EventfulNotification {
     }
 
     // Delay is in milliseconds
-    public static void scheduleNotification(Context context, Notification notification, int delay) {
+    public static void scheduleNotification(Context context, Notification notification, int eventHash, int delay) {
 
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, requestCode);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, eventHash);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode++, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, eventHash, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        long futureInMillis = Math.max((long)0.0, SystemClock.elapsedRealtime() + delay);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
