@@ -99,6 +99,7 @@ public class EventViewerActivity extends Activity {
         Bundle extras = intent.getExtras();
         eventId = extras.getString("EVENT_ID");
         clone = extras.getBoolean("CLONE");
+
         getEvent(eventId);
         fillEvent();
 
@@ -126,6 +127,18 @@ public class EventViewerActivity extends Activity {
         emptyDate = new Date();
         emptyDate.setTime(0);
 
+        //TODO (andrew) reuse inviteList? eh too much work
+        /* Get the list of inviteLists (for reuse purposes) */
+        ParseQuery<ParseObject> inviteListQuery = ParseQuery.getQuery("InviteLists");
+
+        inviteListQuery.whereEqualTo("User", userId);
+        inviteListList.clear();
+        try {
+            inviteListList = (ArrayList) inviteListQuery.find();
+        } catch (com.parse.ParseException e) {
+            message("Error retrieving records");
+        }
+        
         if (eventId.equals("")) {
             /* Nothing passed, create new event with default parameters */
             event    = new ParseObject("Event");
@@ -195,17 +208,6 @@ public class EventViewerActivity extends Activity {
             fullInvitedParseIds.addAll(oldInvitedParseIds);
 
 
-            //TODO (andrew) reuse inviteList? eh too much work
-            /* Get the list of inviteLists (for reuse purposes) */
-            ParseQuery<ParseObject> inviteListQuery = ParseQuery.getQuery("InviteLists");
-
-            inviteListQuery.whereEqualTo("User", userId);
-            inviteListList.clear();
-            try {
-                inviteListList = (ArrayList) inviteListQuery.find();
-            } catch (com.parse.ParseException e) {
-                message("Error retrieving records");
-            }
 
             /* Get the list of titles and locations (for reuse purposes) */
             getPreviousEntries("Titles", "Title", titleList);
