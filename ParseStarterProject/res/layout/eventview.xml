@@ -79,25 +79,6 @@
                 android:src="@drawable/ic_clone"/>
 
         </LinearLayout>
-        <!-- <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:paddingLeft="20sp"
-                android:paddingTop="20sp"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="Address"
-                android:textStyle="bold"/>
-            <TextView
-                android:paddingTop="20sp"
-                android:id="@+id/event_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="address"/>
-        </LinearLayout> -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,6 +182,15 @@
             android:layout_gravity="bottom"
             android:onClick="submit"
             android:text="Submit"/>
+        <Button
+            android:id="@+id/navigation_button"
+            android:layout_toRightOf="@id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:onClick="navigate"
+            android:text="Navigate to Location"/>
     </RelativeLayout>
 
 

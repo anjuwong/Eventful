@@ -31,6 +31,10 @@ public class OwnerEVFillerBehavior implements EVFillerBehavior {
         loc_text.setTextColor(Color.BLUE);
         loc_text.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
+        TextView invite_button = (TextView) parent.findViewById(R.id.invite_button);
+        invite_button.setTextColor(Color.BLUE);
+        invite_button.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+
         // Do not display the RSVP option
         TextView rsvp_button = (TextView) parent.findViewById(R.id.rsvp_button);
         rsvp_button.setClickable(false);
