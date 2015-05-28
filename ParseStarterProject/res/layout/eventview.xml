@@ -64,6 +64,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
         <Button
+            android:id="@+id/seesuggestedtimes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:onClick="viewSuggetedTimes"
+            android:text="Choose Suggested Times"/>
+        <Button
+            android:id="@+id/suggestnewtime_button"
+            android:layout_toRightOf="@+id/seesuggestedtimes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:onClick="suggestTime"
+            android:text="Suggest New Time"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +113,7 @@
             android:onClick="navigate"
             android:text="Navigate to Location"/>
     </RelativeLayout>
+
 
 
 </LinearLayout>

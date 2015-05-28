@@ -71,6 +71,9 @@ public class EventViewerActivity extends Activity {
     private final List<String> titleList = new ArrayList<>();
     private final List<String> locList = new ArrayList<>();
     private Date datetime;
+
+    private List<Date> suggestedTimesList = new ArrayList<>();
+
     private Date emptyDate;
     private TextView title_text;
     private TextView loc_text;
@@ -130,6 +133,7 @@ public class EventViewerActivity extends Activity {
         event.put("Creator", creator);
         event.put("User", creator);
         event.put("Type", type);
+        event.put("TimeVote", suggestedTimesList);
 
         // Get the invite list
         savedInvitedParseIds.addAll(inviteHelper.getInvitedParseIds());
@@ -208,6 +212,8 @@ public class EventViewerActivity extends Activity {
             type     = event.getInt("Type");
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
+
+            suggestedTimesList = event.getList("TimeVote");
             if(clone) {
                 event = new ParseObject("Event");
                 datetime = emptyDate;
@@ -423,6 +429,54 @@ public class EventViewerActivity extends Activity {
                 });   ;
         builder.create();
         final Dialog dialog = builder.show();
+    }
+
+    public void suggestTime(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+        LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.datetime_editor, null);
+        builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+                TimePicker tp = (TimePicker)layout.findViewById(R.id.edit_time);
+                DatePicker dp = (DatePicker)layout.findViewById(R.id.edit_date);
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, dp.getYear());
+                cal.set(Calendar.MONTH, dp.getMonth());
+                cal.set(Calendar.DATE, dp.getDayOfMonth());
+                cal.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
+                cal.set(Calendar.MINUTE, tp.getCurrentMinute());
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                suggestedTimesList.add(cal.getTime());
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });   ;
+        builder.create();
+        final Dialog dialog = builder.show();
+    }
+
+    public void viewSuggetedTimes(View view) {
+        String[] dateList = new String[suggestedTimesList.size()];
+        for(int i = 0; i < suggestedTimesList.size(); i++) {
+            dateList[i] = suggestedTimesList.get(i).toString();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+        builder.setTitle("Choose an time")
+                .setItems(dateList, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        datetime = suggestedTimesList.get(which);
+                        time_text.setText(datetime.toString());
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     public void editInvites(View view) {
