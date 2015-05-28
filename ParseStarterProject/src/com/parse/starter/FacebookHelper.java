@@ -35,6 +35,8 @@ public class FacebookHelper {
 
     /*
      * Query the Facebook Graph API for the name and ID of the user.
+     *
+     * @param parseUser the current parse user
      */
     protected void getNameAndId(final ParseUser parseUser) {
 
@@ -61,6 +63,9 @@ public class FacebookHelper {
 
     /*
      * Store the user's Facebook ID and Name in the Parse database.
+     *
+     * @param parseUser the current Parse user
+     * @param graphQueryResult the JSON object containing the query result
      */
     private void storeNameAndId(ParseUser parseUser, JSONObject graphQueryResult) {
         try {
@@ -79,6 +84,8 @@ public class FacebookHelper {
 
     /*
      * Query the Facebook Graph API for the user's friends that also use Eventful.
+     *
+     * @return JSONArray array of JSONObjects representing the current user's friends
      */
     protected JSONArray getFriendList() {
         GraphRequest request = GraphRequest.newMyFriendsRequest(
@@ -97,6 +104,12 @@ public class FacebookHelper {
         return friendList;
     }
 
+
+    /*
+        Stores the current user's list of friends in the Parse DB
+        @param parseUser the current Parse user
+        @param graphQueryResult array of JSONObjects representing the current user's friends
+     */
     private void storeFriendList(ParseUser parseUser, JSONArray graphQueryResult) {
         List<JSONObject> friendJSONObjects = new ArrayList<JSONObject>();
         for (int i = 0; i < graphQueryResult.length(); i++) {
