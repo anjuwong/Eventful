@@ -161,28 +161,28 @@
             android:paddingTop="20sp"
             android:paddingBottom="20sp"/>
     </LinearLayout>
-    <RelativeLayout
+
+    <TextView
+        android:paddingLeft="20sp"
+        android:paddingTop="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <Button
-            android:id="@+id/seesuggestedtimes_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:onClick="viewSuggetedTimes"
-            android:text="Choose Suggested Times"/>
-        <Button
-            android:id="@+id/suggestnewtime_button"
-            android:layout_toRightOf="@+id/seesuggestedtimes_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:onClick="suggestTime"
-            android:text="Suggest New Time"/>
-    </RelativeLayout>
+        android:text="View Suggested Times"
+        android:textColor="#006DB0"
+        android:clickable="true"
+        android:onClick="viewSuggetedTimes"
+        android:textStyle="bold"/>
+    <TextView
+        android:paddingLeft="20sp"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Suggest New Time"
+        android:textColor="#006DB0"
+        android:clickable="true"
+        android:onClick="suggestTime"
+        android:textStyle="bold"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

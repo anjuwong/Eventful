@@ -720,7 +720,9 @@ public class EventViewerActivity extends Activity {
                 cal.set(Calendar.MINUTE, tp.getCurrentMinute());
                 cal.set(Calendar.SECOND, 0);
                 cal.set(Calendar.MILLISECOND, 0);
-                suggestedTimesList.add(cal.getTime());
+
+                if(!suggestedTimesList.contains(cal.getTime()))
+                    suggestedTimesList.add(cal.getTime());
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
