@@ -401,7 +401,7 @@ public class EventViewerActivity extends Activity {
     /* Verifies that the inputs are not default */
     public boolean verify() {
         if(title.equals("") ||
-                // locId.equals("") ||
+                locId.equals("") ||
                 datetime.equals(emptyDate)) // update when implementing invites
             return false;
         return true;
