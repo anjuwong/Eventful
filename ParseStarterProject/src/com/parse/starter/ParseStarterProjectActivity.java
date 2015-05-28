@@ -13,10 +13,16 @@ import android.support.v4.app.FragmentTabHost;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
+import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -156,6 +162,7 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
 		ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
 	}
 
 	public void reloadEvents() {

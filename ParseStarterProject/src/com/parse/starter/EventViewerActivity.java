@@ -1,14 +1,19 @@
 package com.parse.starter;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +42,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.parse.Parse;
 import com.parse.ParseException;
 
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -208,7 +215,6 @@ public class EventViewerActivity extends Activity {
             }
             oldInvitedParseIds.addAll(invitedParseIds);
             fullInvitedParseIds.addAll(oldInvitedParseIds);
-
 
 
             /* Get the list of titles and locations (for reuse purposes) */
@@ -389,12 +395,47 @@ public class EventViewerActivity extends Activity {
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
 
-        // TODO NEIL Create Notification here?
-        String notifyMsg = "Event " + "\'" + title + "\'" + " scheduled for " + datetime;
-        EventfulNotification.scheduleNotification(this.getApplicationContext(),
-                EventfulNotification.createNotification(this.getApplicationContext(), "Upcoming Event!", notifyMsg),
-                eventId.hashCode(),
-                (int)(datetime.getTime() - System.currentTimeMillis() - 60*30*1000));
+        // TODO: Send Invite Notifications to all invited guests
+        String notifyMsg = getName(creator) + " has invited you to a new Event!";
+        ParseQuery pQuery = ParseInstallation.getQuery(); // Installation query
+//        for (String id: fullInvitedParseIds) {
+        pQuery.whereEqualTo("objectId", "ZjoWflh79B");
+//        }
+        ParsePush.sendMessageInBackground(notifyMsg, pQuery);
+
+//		push.sendInBackground(new SendCallback() {
+//			public void done(ParseException e) {
+//				if (e == null) {
+//					Log.d("push", "success!");
+//				} else {
+//					Log.d("push", "failure " + e.getLocalizedMessage());
+//				}
+//			}
+//		});
+
+
+        // Local Notification - Reminder 30 minutes before event
+        notifyMsg = "Event " + "\'" + title + "\'" + " scheduled for " + datetime;
+        Notification eventNotif = EventfulNotification.createNotification(
+                this.getApplicationContext(), "Upcoming Event!", notifyMsg);
+
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, eventId.hashCode());
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, eventNotif);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, eventId.hashCode(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+        Log.d("curTime", "" + System.currentTimeMillis() );
+        Log.d("datetime", "" + datetime.getTime() );
+        Log.d("elapsedTime", "" + SystemClock.elapsedRealtime());
+        // Notification pops 30 minutes before Event occurs
+        long futureInMillis = Math.max((long)0.0,
+                (SystemClock.elapsedRealtime() + datetime.getTime() - System.currentTimeMillis() - 60*30*1000));
+
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        // End Alarm notification - recall chunk if event time changes
 
         finish();
     }

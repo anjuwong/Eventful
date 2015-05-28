@@ -8,7 +8,9 @@ import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.parse.ParseUser;
 
@@ -36,11 +38,11 @@ public class ParseApplication extends Application {
     // defaultACL.setPublicReadAccess(true);
     ParseACL.setDefaultACL(defaultACL, true);
 
-    ParsePush.subscribeInBackground("", new SaveCallback() {
+    ParsePush.subscribeInBackground("test", new SaveCallback() {
       @Override
       public void done(ParseException e) {
         if (e == null) {
-          Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+          Log.d("com.parse.push", "successfully subscribed to the broadcast channel." + "test");
         } else {
           Log.e("com.parse.push", "failed to subscribe for push", e);
         }
