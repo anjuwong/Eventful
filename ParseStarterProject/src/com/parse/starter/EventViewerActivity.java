@@ -138,7 +138,7 @@ public class EventViewerActivity extends Activity {
         } catch (com.parse.ParseException e) {
             message("Error retrieving records");
         }
-        
+
         if (eventId.equals("")) {
             /* Nothing passed, create new event with default parameters */
             event    = new ParseObject("Event");
