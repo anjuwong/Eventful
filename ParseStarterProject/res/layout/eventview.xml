@@ -28,37 +28,139 @@
             android:clickable="true"
             android:paddingBottom="10sp"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/event_loc"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:clickable="true"
-        android:onClick="editLoc"
-        android:textSize="25sp" />
-    <TextView
-        android:id="@+id/event_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/greeting"
-        android:textSize="22sp"
-        android:clickable="true"
-        android:onClick="editTime"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"/>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Invited by"
+                android:textStyle="bold"/>
+            <TextView
+                android:paddingTop="20sp"
+                android:id="@+id/event_host"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\?\?\?" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textStyle="bold"/>
+            <TextView
+                android:paddingTop="20sp"
+                android:id="@+id/event_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="location"
+                android:clickable="true"
+                android:onClick="editLoc" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loc_vote"
+                android:clickable="true"
+                android:onClick="voteLoc"
+                android:src="@drawable/ic_clone"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textStyle="bold"
+                android:paddingBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"
+                android:clickable="true"
+                android:onClick="editTime"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time_vote"
+                android:clickable="true"
+                android:onClick="voteTime"
+                android:src="@drawable/ic_clone"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <TextView
-        android:id="@+id/event_invite_list"
+        android:paddingLeft="20sp"
+        android:paddingTop="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Who's invited"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/invite_button"
+        android:paddingLeft="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/invite"
-        android:textSize="22sp"
         android:clickable="true"
         android:onClick="editInvites"
         android:paddingTop="10sp"
         android:paddingBottom="10sp"/>
+    <ListView
+        android:paddingLeft="20sp"
+        android:id="@+id/event_invite_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/rsvp_text"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:text="RSVP"
+            android:textStyle="bold"
+            android:paddingBottom="20sp"/>
 
-
+        <TextView
+            android:id="@+id/rsvp_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Undecided"
+            android:clickable="true"
+            android:onClick="setRSVP"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"/>
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

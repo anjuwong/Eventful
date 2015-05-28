@@ -1,9 +1,18 @@
 package com.parse.starter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -33,19 +42,31 @@ public class InviteHelper {
     /* Holds the parse ids of the invited friends. */
     private ArrayList<String> invitedParseIds;
 
+    /* Resets the parent's display of the list */
+    private Function resetParentDisplay;
 
-    public InviteHelper (Context context, List<String> alreadyInvitedParseIds) {
+    private List<String> fullInviteList;
+
+    /* True if the dialog builder is to display reuseable lists instead of single users */
+    /*private boolean listBool;
+    public void toggleList(View view) {
+        listBool = !listBool;
+    }*/
+    public InviteHelper (Context context, List<String> alreadyInvitedParseIds, Function resetParentDisplay) {
         this.context = context;
         this.parseIdToNameMap = new HashMap<String, String>();
         this.nameToParseIdMap = new HashMap<String, String>();
         this.friendNames = getFriendNames();
         this.invitedFriendIndices = new ArrayList<Integer>();
         this.invitedParseIds = new ArrayList<String>();
+        this.resetParentDisplay = resetParentDisplay;
+        this.fullInviteList = alreadyInvitedParseIds;
 
 
         // hacky
         resetInviteHelper(alreadyInvitedParseIds);
     }
+
 
     /*
      * Builds and opens up the invite dialog popup.
@@ -55,6 +76,7 @@ public class InviteHelper {
         String[] friendNamesArr = new String[friendNames.size()];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
 
         // TODO(abby): Put this title in the strings.xml file
         builder.setTitle("Invite your friends")
@@ -71,6 +93,7 @@ public class InviteHelper {
                     }
                 })
                 .setPositiveButton("OK", saveCheckboxSelection());
+
         builder.create();
         builder.show();
     }
@@ -136,6 +159,13 @@ public class InviteHelper {
                 for (int i = 0; i < invitedFriendIndices.size(); i++) {
                     invitedParseIds.add(nameToParseIdMap.get(friendNames.get(i)));
                 }
+
+                /* After choosing, update the list in the EventViewerActivity
+                 * Update the ListView to reflect the selection
+                 * Reset so user can't select a user twice (would lead to crash) */
+                fullInviteList.addAll(invitedParseIds);
+                resetParentDisplay.call();
+                resetInviteHelper(fullInviteList);
             }
         };
 

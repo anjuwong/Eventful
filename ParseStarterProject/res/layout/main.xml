@@ -26,13 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NEW EVENT"
             android:id="@+id/button"
+            android:src="@drawable/ic_new"
+            android:background="@null"
             android:onClick="newEvent"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="right|bottom" />
 
         <Button
             android:layout_width="match_parent"
