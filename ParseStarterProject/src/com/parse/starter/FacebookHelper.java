@@ -6,6 +6,7 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -65,6 +66,7 @@ public class FacebookHelper {
         try {
             parseUser.put("Name", graphQueryResult.get("name"));
             parseUser.put("FacebookID", graphQueryResult.get("id"));
+            ParseInstallation.getCurrentInstallation().put("facebookId", graphQueryResult.get("id"));
             parseUser.saveInBackground();
         } catch (JSONException e) {
             Log.e("GRAPH_REQUEST", "Could not store the user's FacebookID and Name in Parse");
