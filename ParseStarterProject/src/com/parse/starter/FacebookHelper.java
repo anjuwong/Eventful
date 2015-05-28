@@ -66,7 +66,11 @@ public class FacebookHelper {
         try {
             parseUser.put("Name", graphQueryResult.get("name"));
             parseUser.put("FacebookID", graphQueryResult.get("id"));
-            ParseInstallation.getCurrentInstallation().put("facebookId", graphQueryResult.get("id"));
+            // also add to installation
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put("facebookId", graphQueryResult.get("id"));
+            installation.saveInBackground();
+            // done adding to installation
             parseUser.saveInBackground();
         } catch (JSONException e) {
             Log.e("GRAPH_REQUEST", "Could not store the user's FacebookID and Name in Parse");

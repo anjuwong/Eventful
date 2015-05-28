@@ -33,6 +33,7 @@ public class LoginActivity extends Activity {
             initLogin();
         } else {
             // Query and store the list of friends
+            getNameAndFacebookID(); // Need to update installation table, dunno where else to do it
             getFriendsList();
             openMainPage();
         }
