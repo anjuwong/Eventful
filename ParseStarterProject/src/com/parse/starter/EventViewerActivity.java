@@ -395,26 +395,16 @@ public class EventViewerActivity extends Activity {
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
 
+
         // TODO: Send Invite Notifications to all invited guests
         String notifyMsg = getName(creator) + " has invited you to a new Event!";
-        ParseQuery pQuery = ParseInstallation.getQuery(); // Installation query
-//        for (String id: fullInvitedParseIds) {
-        pQuery.whereEqualTo("objectId", "ZjoWflh79B");
-//        }
-        ParsePush.sendMessageInBackground(notifyMsg, pQuery);
+        for (String fbID: fullInvitedParseIds) {
+            ParseQuery pQuery = ParseInstallation.getQuery(); // Installation query
+            pQuery.whereEqualTo("facebookId", fbID);
+            ParsePush.sendMessageInBackground(notifyMsg, pQuery);
+        }
 
-//		push.sendInBackground(new SendCallback() {
-//			public void done(ParseException e) {
-//				if (e == null) {
-//					Log.d("push", "success!");
-//				} else {
-//					Log.d("push", "failure " + e.getLocalizedMessage());
-//				}
-//			}
-//		});
-
-
-        // Local Notification - Reminder 30 minutes before event
+        // Local Notification - Reminder 30 minutes before event - for some reason doesn't work with Andrew's device
         notifyMsg = "Event " + "\'" + title + "\'" + " scheduled for " + datetime;
         Notification eventNotif = EventfulNotification.createNotification(
                 this.getApplicationContext(), "Upcoming Event!", notifyMsg);
@@ -442,7 +432,7 @@ public class EventViewerActivity extends Activity {
     /* Verifies that the inputs are not default */
     public boolean verify() {
         if(title.equals("") ||
-                locId.equals("") ||
+                //locId.equals("") ||
                 datetime.equals(emptyDate)) // update when implementing invites
             return false;
         return true;
