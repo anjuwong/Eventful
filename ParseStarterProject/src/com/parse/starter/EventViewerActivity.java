@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -860,7 +861,7 @@ public class EventViewerActivity extends Activity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
-        builder.setTitle("Choose an time")
+        builder.setTitle("Choose a new time")
                 .setItems(dateList, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         datetime = suggestedTimesList.get(which);
@@ -897,6 +898,39 @@ public class EventViewerActivity extends Activity {
         });
 
         builder.show();
+    }
+
+    public void chatMsg(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+        LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.chat_layout, null);
+
+        builder.setView(layout).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        builder.create();
+        final Dialog dialog = builder.show();
+
+        final EditText userInput = (EditText) layout.findViewById(R.id.etMessage);
+
+        ImageButton chatBtn = (ImageButton) layout.findViewById(R.id.btSend);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String usrMsg = userInput.getText().toString();
+                if (usrMsg != "" && usrMsg != " ")
+                    chat.add(getName(userId) + ": " + userInput.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        ArrayAdapter<String> chatAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, chat);
+
+        ListView chatLV = (ListView) layout.findViewById(R.id.lvChat);
+        chatLV.setAdapter(chatAdapter);
+
     }
 
     /**
