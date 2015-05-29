@@ -1,253 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:style="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/event_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#D9D9D9">
-        <ImageView
-            android:id="@+id/event_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_blank"
-            android:paddingRight="10sp" />
-        <TextView
-            android:layout_centerInParent="true"
-            android:id="@+id/event_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="@string/sample_title"
-            android:textSize="25sp"
-            android:onClick="editTitle"
-            android:clickable="true"
-            android:paddingBottom="10sp"/>
-    </RelativeLayout>
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
+        xmlns:style="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true">
+        <RelativeLayout
+            android:id="@+id/event_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:paddingLeft="20sp"
-                android:paddingTop="20sp"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="Invited by"
-                android:textStyle="bold"/>
-            <TextView
-                android:paddingTop="20sp"
-                android:id="@+id/event_host"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="\?\?\?" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:paddingLeft="20sp"
-                android:paddingTop="20sp"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:textStyle="bold"/>
-            <TextView
-                android:paddingTop="20sp"
-                android:id="@+id/event_loc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="location"
-                android:clickable="true"
-                android:onClick="editLoc" />
+            android:layout_gravity="bottom"
+            android:background="#D9D9D9">
             <ImageView
+                android:id="@+id/event_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/loc_vote"
+                android:src="@drawable/ic_blank"
+                android:paddingRight="10sp" />
+            <TextView
+                android:layout_centerInParent="true"
+                android:id="@+id/event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="@string/sample_title"
+                android:textSize="25sp"
+                android:onClick="editTitle"
                 android:clickable="true"
-                android:onClick="voteLoc"
-                android:src="@drawable/ic_clone"/>
+                android:paddingBottom="10sp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:paddingLeft="20sp"
+                    android:paddingTop="20sp"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Invited by"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:paddingTop="20sp"
+                    android:id="@+id/event_host"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\?\?\?" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:paddingLeft="20sp"
+                    android:paddingTop="20sp"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:paddingTop="20sp"
+                    android:id="@+id/event_loc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="location"
+                    android:clickable="true"
+                    android:onClick="editLoc" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loc_vote"
+                    android:clickable="true"
+                    android:onClick="voteLoc"
+                    android:src="@drawable/ic_clone"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:paddingLeft="20sp"
+                    android:paddingTop="20sp"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textStyle="bold"
+                    android:paddingBottom="20sp"/>
+
+                <TextView
+                    android:id="@+id/event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="time"
+                    android:clickable="true"
+                    android:onClick="editTime"
+                    android:paddingTop="20sp"
+                    android:paddingBottom="20sp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time_vote"
+                    android:clickable="true"
+                    android:onClick="voteTime"
+                    android:src="@drawable/ic_clone"/>
+            </LinearLayout>
         </LinearLayout>
+
+
+        <TextView
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Who's invited"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/invite_button"
+            android:paddingLeft="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/invite"
+            android:clickable="true"
+            android:onClick="editInvites"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"/>
+        <ListView
+            android:paddingLeft="20sp"
+            android:id="@+id/event_invite_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/rsvp_text"
                 android:paddingLeft="20sp"
                 android:paddingTop="20sp"
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
-                android:text="Time"
+                android:text="RSVP"
                 android:textStyle="bold"
                 android:paddingBottom="20sp"/>
 
             <TextView
-                android:id="@+id/event_time"
+                android:id="@+id/rsvp_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="time"
+                android:text="Undecided"
                 android:clickable="true"
-                android:onClick="editTime"
+                android:onClick="setRSVP"
                 android:paddingTop="20sp"
                 android:paddingBottom="20sp"/>
-            <ImageView
+        </LinearLayout>
+
+        <TextView
+            android:paddingLeft="20sp"
+            android:paddingTop="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Suggested Times"
+            android:textColor="#006DB0"
+            android:clickable="true"
+            android:onClick="viewSuggetedTimes"
+            android:textStyle="bold"/>
+        <TextView
+            android:paddingLeft="20sp"
+            android:paddingTop="10sp"
+            android:paddingBottom="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suggest New Time"
+            android:textColor="#006DB0"
+            android:clickable="true"
+            android:onClick="suggestTime"
+            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/time_vote"
-                android:clickable="true"
-                android:onClick="voteTime"
-                android:src="@drawable/ic_clone"/>
-        </LinearLayout>
+                android:text="Enter Chat"
+                android:id="@+id/chatbutton"
+                android:onClick="chat"
+                android:layout_gravity="bottom"
+                android:layout_alignParentLeft="true"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Chat"
+                android:id="@+id/viewchatbutton"
+                android:layout_toLeftOf="@+id/chatbutton"
+                android:onClick="viewChat"
+                android:layout_gravity="bottom"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <ImageButton
+                android:id="@+id/cancel_button"
+                android:src="@mipmap/ic_back"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:onClick="cancel"
+                android:text="Back"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <ImageButton
+                android:id="@+id/navigation_button"
+                android:src="@mipmap/ic_nav"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:onClick="navigate"
+                android:text="Navigate to Location"
+                android:layout_alignParentRight="true" />
+
+            <ImageButton
+                android:id="@+id/submit_button"
+                android:src="@mipmap/ic_go"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:layout_centerHorizontal="true"
+                android:onClick="submit"
+                android:text="Submit"
+                 />
+        </RelativeLayout>
     </LinearLayout>
-
-
-    <TextView
-        android:paddingLeft="20sp"
-        android:paddingTop="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Who's invited"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/invite_button"
-        android:paddingLeft="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/invite"
-        android:clickable="true"
-        android:onClick="editInvites"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"/>
-    <ListView
-        android:paddingLeft="20sp"
-        android:id="@+id/event_invite_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/rsvp_text"
-            android:paddingLeft="20sp"
-            android:paddingTop="20sp"
-            android:layout_width="100sp"
-            android:layout_height="wrap_content"
-            android:text="RSVP"
-            android:textStyle="bold"
-            android:paddingBottom="20sp"/>
-
-        <TextView
-            android:id="@+id/rsvp_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Undecided"
-            android:clickable="true"
-            android:onClick="setRSVP"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp"/>
-    </LinearLayout>
-
-    <TextView
-        android:paddingLeft="20sp"
-        android:paddingTop="10sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Suggested Times"
-        android:textColor="#006DB0"
-        android:clickable="true"
-        android:onClick="viewSuggetedTimes"
-        android:textStyle="bold"/>
-    <TextView
-        android:paddingLeft="20sp"
-        android:paddingTop="10sp"
-        android:paddingBottom="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Suggest New Time"
-        android:textColor="#006DB0"
-        android:clickable="true"
-        android:onClick="suggestTime"
-        android:textStyle="bold"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enter Chat"
-            android:id="@+id/chatbutton"
-            android:onClick="chat"
-            android:layout_gravity="bottom"
-            android:layout_alignParentLeft="true"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Chat"
-            android:id="@+id/viewchatbutton"
-            android:layout_toLeftOf="@+id/chatbutton"
-            android:onClick="viewChat"
-            android:layout_gravity="bottom"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <ImageButton
-            android:id="@+id/cancel_button"
-            android:src="@mipmap/ic_back"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:onClick="cancel"
-            android:text="Back"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <ImageButton
-            android:id="@+id/navigation_button"
-            android:src="@mipmap/ic_nav"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:onClick="navigate"
-            android:text="Navigate to Location"
-            android:layout_alignParentRight="true" />
-
-        <ImageButton
-            android:id="@+id/submit_button"
-            android:src="@mipmap/ic_go"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:layout_centerHorizontal="true"
-            android:onClick="submit"
-            android:text="Submit"
-             />
-    </RelativeLayout>
-</LinearLayout>
+</ScrollView>
