@@ -37,12 +37,23 @@ public class ParseStarterProjectActivity extends FragmentActivity
 	private int mReloadCount = 1;
     private int currentTypeFilter = 4;
 
+	/**
+	 * Display an error message on the screen
+	 *
+	 * @param msg message to display
+	 */
 	public void error(String msg) {
 		Toast toast = Toast.makeText(ParseStarterProjectActivity.this, msg, Toast.LENGTH_LONG);
 		toast.show();
 		finish();
 	}
 
+	/**
+	 * Get all the events the user is involved in
+	 *
+	 * @param currentUser the current user using the application
+	 * @return a list of all events the user is involved in
+	 */
 	public List<ParseObject> getAllEvents(ParseUser currentUser) {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
 		query.whereEqualTo("User", currentUser.getObjectId());
@@ -56,6 +67,13 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return events;
 	}
 
+	/**
+	 * Filter events that do not match a certain event type
+	 *
+	 * @param currentUser the current user using the application
+	 * @param type the code representing the type of event
+	 * @return the events that are of type matching the input type
+	 */
     public List<ParseObject> getAllEventsFilteredByType(ParseUser currentUser, int type) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.whereEqualTo("User", currentUser.getObjectId());
@@ -77,6 +95,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
         return filteredEvents;
     }
 
+	/**
+	 * Filter events by calling their isValid() function
+	 *
+	 * @param events a list of events
+	 * @return the filtered list of events
+	 */
 	public List<ParseObject> filterEvents(List<Event> events) {
 		List<ParseObject> filteredEvents = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -88,6 +112,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return filteredEvents;
 	}
 
+	/**
+	 * Get descriptions of the events
+	 *
+	 * @param events a list of events
+	 * @return a list of descriptions corresponding to the events
+	 */
 	public ArrayList<String> getDescriptions(List<ParseObject> events) {
 		ArrayList<String> descriptions = new ArrayList<>();
 		ArrayList<EventListItem> eventAttribs = new ArrayList<>();
@@ -102,6 +132,13 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		}
 		return descriptions;
 	}
+
+	/**
+	 * Get all the locations of events
+	 *
+	 * @param events a list of events
+	 * @return a list of strings describing the location of events
+	 */
 	public ArrayList<String> getLocs(List<ParseObject> events) {
 		ArrayList<String> locs = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -110,6 +147,13 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		}
 		return locs;
 	}
+
+	/**
+	 * Get all the dates of events
+	 *
+	 * @param events a list of events
+	 * @return a list of strings describing the dates of events
+	 */
 	public ArrayList<String> getDates(List<ParseObject> events) {
 		ArrayList<String> dates = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -118,6 +162,13 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		}
 		return dates;
 	}
+
+	/**
+	 * Get the titles of events
+	 *
+	 * @param events a list of events
+	 * @return a list of strings describing the titles of events
+	 */
 	public ArrayList<String> getTitles(List<ParseObject> events) {
 		ArrayList<String> titles = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -126,6 +177,13 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		}
 		return titles;
 	}
+
+	/**
+	 * Get the types of events
+	 *
+	 * @param events a list of events
+	 * @return a list of integers describing the types of events
+	 */
 	public ArrayList<Integer> getTypes(List<ParseObject> events) {
 		ArrayList<Integer> types = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -134,6 +192,12 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return types;
 	}
 
+	/**
+	 * Get the IDs of events
+	 *
+	 * @param events a list of events
+	 * @return a list of strings describing the IDs of the events
+	 */
 	public ArrayList<String> getIDs(List<ParseObject> events) {
 		ArrayList<String> ids = new ArrayList<>();
 		for (int i = 0; i < events.size(); i++) {
@@ -142,6 +206,16 @@ public class ParseStarterProjectActivity extends FragmentActivity
 		return ids;
 	}
 
+	/**
+	 * Put the event parameters in a bundle
+	 *
+	 * @param ids a list of IDs
+	 * @param titles a list of titles
+	 * @param locs a list of locations
+	 * @param dates a list of dates
+	 * @param types a list of types
+	 * @return a bundle containing all of the parameters
+	 */
 	public Bundle genBundle(ArrayList<String> ids, ArrayList<String> titles, ArrayList<String> locs, ArrayList<String> dates, ArrayList<Integer> types) {
 		Bundle bundle = new Bundle();
 		//bundle.putStringArrayList("descriptions", descriptions);
