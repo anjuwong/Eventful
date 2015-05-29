@@ -187,33 +187,15 @@
             android:clickable="true"
             android:onClick="suggestTime"
             android:textStyle="bold"/>
-        <RelativeLayout
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter Chat"
-                android:id="@+id/chatbutton"
-                android:src="@mipmap/ic_chat"
-                android:background="@null"
-                android:onClick="chat"
-                android:layout_gravity="bottom"
-                android:layout_alignParentLeft="true"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Chat"
-                android:src="@mipmap/ic_chat"
-                android:background="@null"
-                android:id="@+id/viewchatbutton"
-                android:layout_toLeftOf="@+id/chatbutton"
-                android:onClick="viewChat"
-                android:layout_gravity="bottom"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-
+            android:text="Enter Chat"
+            android:id="@+id/finalChat"
+            android:src="@mipmap/ic_chat"
+            android:background="@null"
+            android:onClick="chatMsg"
+            android:layout_gravity="center_horizontal"/>
 
 
         <RelativeLayout

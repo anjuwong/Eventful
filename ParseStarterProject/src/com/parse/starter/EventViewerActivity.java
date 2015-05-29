@@ -104,11 +104,6 @@ public class EventViewerActivity extends Activity {
     /* Request code passed to the PlacePicker intent to identify its result when it returns. */
     private static final int REQUEST_PLACE_PICKER = 1;
 
-    /**
-     * Called on creating activity
-     *
-     * @param savedInstanceState saved instance of application before creating
-     */
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -135,14 +130,10 @@ public class EventViewerActivity extends Activity {
         inviteHelper = new InviteHelper(EventViewerActivity.this, invitedParseIds);*/
     }
 
-    /**
-     * Takes the input eventId and queries for that event
+    /* Takes the input eventId and queries for that event
      * If empty-string as input, create a new parse object and create dialog to get the type
      * Otherwise, get and record all of the event's attributes
-     * If the event is a cloned event, create a new parse object instead of using the old  object
-     *
-     * @param eventId String containing the currently viewed event; if empty, then new event
-     */
+     * If the event is a cloned event, create a new parse object instead of using the old  object */
     public void getEvent(String eventId) {
         userId = ParseUser.getCurrentUser().getObjectId();
         emptyDate = new Date();
@@ -159,7 +150,7 @@ public class EventViewerActivity extends Activity {
         } catch (com.parse.ParseException e) {
             message("Error retrieving records");
         }
-
+        
         if (eventId.equals("")) {
             /* Nothing passed, create new event with default parameters */
             event    = new ParseObject("Event");
@@ -246,10 +237,8 @@ public class EventViewerActivity extends Activity {
 
     }
 
-    /**
-     *  Fills in the text fields for the event page
-     * Has different behaviors based on whether event is expired, or whether user is the creator
-     */
+    /* Fills in the text fields for the event page
+     * Has different behaviors based on whether event is expired, or whether user is the creator */
     public void fillEvent() {
         title_text = (TextView) findViewById(R.id.event_title);
         loc_text   = (TextView) findViewById(R.id.event_loc);
@@ -293,9 +282,7 @@ public class EventViewerActivity extends Activity {
         filler.fillView(event, this);
     }
 
-    /**
-     *  Changes the icon of the eventView and makes the header color match the image
-     */
+    /* Changes the icon of the eventView and makes the header color match the image */
     public void fillHeader() {
         RelativeLayout header = (RelativeLayout)findViewById(R.id.event_header);
         ImageView icon = (ImageView)findViewById(R.id.event_icon);
@@ -323,12 +310,8 @@ public class EventViewerActivity extends Activity {
         }
     }
 
-    /**
-     * If verified, puts parameters into the event object and pushes
-     * Creators can update their guests' objects as well
-     *
-     * @param view current view when submit is clicked
-     */
+    /* If verified, puts parameters into the event object and pushes
+     * Creators can update their guests' objects as well */
     public void submit (View view) {
 
         /* Creator: changes get pushed to all users' objects
@@ -410,7 +393,7 @@ public class EventViewerActivity extends Activity {
            query for old objects and update fields */
         saveNewInviteEvents();
         //if (!(eventId == "" || clone))
-        saveOldInviteEvents();
+            saveOldInviteEvents();
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
@@ -449,10 +432,7 @@ public class EventViewerActivity extends Activity {
 
         finish();
     }
-    /**
-     *  Verifies that the inputs are not default
-     *  @return returns true if the date and title has been set
-     */
+    /* Verifies that the inputs are not default */
     public boolean verify() {
         if(title.equals("") ||
                 //locId.equals("") ||
@@ -461,9 +441,7 @@ public class EventViewerActivity extends Activity {
         return true;
     }
 
-    /**
-     *  Saves all attributes for the user's event
-     */
+    /* Saves all attributes for the user's event */
     public void saveOwnEvent() {
         event.put("Title", title);
         event.put("Time", datetime);
@@ -480,9 +458,7 @@ public class EventViewerActivity extends Activity {
         event.saveInBackground();
     }
 
-    /**
-     *  Creates and saves new objects for the newly invited users
-     */
+    /* Creates and saves new objects for the newly invited users */
     public void saveNewInviteEvents() {
         // create new event objects for new invitees
         for (String id : newInvitedParseIds) {
@@ -503,11 +479,9 @@ public class EventViewerActivity extends Activity {
         }
     }
 
-    /**
-     * Looks for existing events and updates them
+    /* Looks for existing events and updates them
      * Only updates things that can be changed by other users (e.g. RSVP is unchanged)
-     * Should only be called by the creator, since only creator can update anything
-     */
+     * Should only be called by the creator, since only creator can update anything */
     public void saveOldInviteEvents() {
         // TODO: check if event changed at all first
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
@@ -529,15 +503,8 @@ public class EventViewerActivity extends Activity {
             invitee.saveInBackground();
         }
     }
-
-    /**
-     * Checks whether a list is contained in a list of lists
-     * For use to check if inviteList is already saved
-     *
-     * @param ll list of ParseObjects (Arrays) that contain a list of
-     * @param l desired list to be checked with
-     * @return returns the objectId of the InviteList object if it exists; else returns empty string
-     */
+    /* Check whether a list is contained in a list of lists
+     * For use to check if inviteList is already saved */
     public String listInListList(List<ParseObject> ll, List<String> l) {
         if (l == null || ll == null)
             return "";
@@ -554,12 +521,8 @@ public class EventViewerActivity extends Activity {
 
 
 
-    /**
-     * Gets the ParseId for a given FacebookID
-     *
-     * @param facebookId id matching the FacebookID column in the User table
-     * @return returns the corresponding entry for objectId in the User table
-     */
+
+    /* Gets the ParseId for a given FacebookID */
     public String getParseId(String facebookId) {
         ParseQuery<ParseUser> pq = ParseUser.getQuery();
         pq.whereEqualTo("FacebookID", facebookId);
@@ -573,13 +536,9 @@ public class EventViewerActivity extends Activity {
         return "";
     }
 
-    /**
-     * Get the name for a given FacebookId or ParseId
-     *
-     * @param facebookId id matching the FacebookID column or the objectId in the User table
-     * @return returns the full name of the user
-     */
-     public String getName(String facebookId) {
+    /* Gets the name for a given FacebookID
+     * If it fails, this will try for a given ParseId */
+    public String getName(String facebookId) {
         ParseQuery<ParseUser> pq = ParseUser.getQuery();
         pq.whereEqualTo("FacebookID", facebookId);
         try {
@@ -601,14 +560,21 @@ public class EventViewerActivity extends Activity {
     }
 
 
-    /**
-     * Queries <tableName> Parse table for <attribute> that match the userId and type
-     * Fills list with entries (clears first)
-     *
-     * @param tableName table in database to be queried over
-     * @param attribute attribute to query for
-     * @param list list to add resulting entries to
-     */
+
+    public void voteTime(View view) {
+        //...
+        if(creator.equals(userId)) // creator should set as datetime instead of timeVote
+            return;
+    }
+
+    public void voteLoc(View view) {
+        //...
+        if(creator.equals(userId)) // creator should set as loc instead of locVote
+            return;
+    }
+
+    /* Queries <tableName> Parse table for <attribute> that match the userId and type
+     * Fills list with entries (clears first) */
     private void getPreviousEntries(String tableName, String attribute, final List<String> list) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(tableName);
 
@@ -626,17 +592,10 @@ public class EventViewerActivity extends Activity {
         }
     }
 
-
-    /**
-     * Creates a new dialogBuilder for setting fields and allows reuse of old entries
+    /* Creates a new dialogBuilder for setting fields and allows reuse of old entries
      * list contains previously submitted entries for the same event type
-     * setText allows onClickListener to set specific text fields
-     *
-     * @param changePrompt string to be displayed in the new dialog
-     * @param list list of previous entries to be reused
-     * @param setText setter to set a textfield in the parent EventViewerActivity
-     */
-     private void editTextField(String changePrompt, final List<String> list, final TextSetter setText) {
+     * setText allows onClickListener to set specific text fields */
+    private void editTextField(String changePrompt, final List<String> list, final TextSetter setText) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -645,6 +604,10 @@ public class EventViewerActivity extends Activity {
         ((TextView)(layout.findViewById(R.id.changeprompt))).setText(changePrompt);
         ListAdapter listAdapter = new ArrayAdapter<String>(EventViewerActivity.this, R.layout.row, list);
         ListView lv = (ListView) layout.findViewById(R.id.edit_list);
+
+        if(false) {
+            // do stuff for locations only
+        }
 
         /* If click on old entry, set text to that entry */
         lv.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -672,20 +635,10 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
-    /**
-     * Create a dialog to edit the title text
-     *
-     * @param view current view when the text is clicked
-     */
     public void editTitle(View view) {
         editTextField("Change the activity name", titleList, new setTitle());
     }
 
-    /**
-     * Create a placepicker to set the location
-     *
-     * @param view current view when the location is clicked
-     */
     public void editLoc(View view) {
         //editTextField("Change the location", locList, new setLoc());
         // Construct an intent for the place picker
@@ -708,12 +661,6 @@ public class EventViewerActivity extends Activity {
     }
 
     /* RSVP by setting status field, 0 Undecided, 1 Going, 2 Not going */
-
-    /**
-     * Sets the RSVP status
-     *
-     * @param view current view when the RSVP is clicked
-     */
     public void setRSVP (View view) {
         String[] statusList = {"Undecided","Going", "Not going"}; //
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
@@ -733,14 +680,6 @@ public class EventViewerActivity extends Activity {
         builder.create();
         builder.show();
     }
-
-    /**
-     * Gets back the place that is picked
-     *
-     * @param requestCode request code
-     * @param resultCode result code
-     * @param data data
-     */
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
@@ -760,11 +699,6 @@ public class EventViewerActivity extends Activity {
         }
     }
 
-    /**
-     *
-     * @param place
-     * @return
-     */
     private String getLocationDescriptor(Place place) {
         final String name = place.getName().toString();
         final String address = place.getAddress().toString();
@@ -777,11 +711,6 @@ public class EventViewerActivity extends Activity {
         return description;
     }
 
-    /**
-     * Creates a dialog to pick the time
-     *
-     * @param view current view when the time is clicked
-     */
     public void editTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -812,10 +741,6 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
-    /**
-     * Opens up the datetime selector to allow user to suggest an alternate time for the event
-     * @param view
-     */
     public void suggestTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -848,11 +773,6 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
-
-    /**
-     * Create an alert dialog with the suggested times for the application
-     * @param view
-     */
     public void viewSuggetedTimes(View view) {
         String[] dateList = new String[suggestedTimesList.size()];
         for(int i = 0; i < suggestedTimesList.size(); i++) {
@@ -871,10 +791,6 @@ public class EventViewerActivity extends Activity {
         builder.show();
     }
 
-    /**
-     * Opens an alert dialog for the user to leave a message on the event
-     * @param view
-     */
     public void chat(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -899,10 +815,6 @@ public class EventViewerActivity extends Activity {
         builder.show();
     }
 
-    /**
-     * Opens an alert dialog for the user to see messages on the event
-     * @param view
-     */
     public void viewChat(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
 
@@ -955,14 +867,7 @@ public class EventViewerActivity extends Activity {
     }
 
     // used to set text within other classes
-
     private class setTitle implements TextSetter {
-
-        /**
-         * calls any function with an input
-         *
-         * @param text input text
-         */
         public void call(String text) {
             title=text;
             title_text.setText(text);
@@ -976,20 +881,11 @@ public class EventViewerActivity extends Activity {
         toast.show();
     }
 
-
-    /**
-     * Exits out of the activity
-     * @param view the current view
-     */
+    /* Exit */
     public void cancel (View view) {
         finish();
     }
 
-    /**
-     * Opens the Google Maps app and navigates to the location
-     *
-     * @param view current view
-     */
     public void navigate(View view) {
         if (locId.equals(""))
             return;
