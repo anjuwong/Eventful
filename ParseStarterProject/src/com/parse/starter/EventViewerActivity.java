@@ -386,17 +386,14 @@ public class EventViewerActivity extends Activity {
         }
 
         saveOwnEvent();
-        saveChatSuggestedTime();
 
         /* Only the creator of an event can affect other users*/
 
         /* only do if not new object (eventId == "" || clone == true)
            query for old objects and update fields */
-        if(creator.equals(userId)) {
-            saveNewInviteEvents();
-            if (eventId == "" || clone)
-                saveOldInviteEvents();
-        }
+        saveNewInviteEvents();
+        if (eventId == "" || clone)
+            saveOldInviteEvents();
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
@@ -475,32 +472,10 @@ public class EventViewerActivity extends Activity {
             newInvitee.put("Type", type);
             newInvitee.put("Status", 0);
             newInvitee.put("InviteList", inviteId);
-            newInvitee.put("globalId", globalId);
-            newInvitee.saveInBackground();
-        }
-    }
-
-    public void saveChatSuggestedTime() {
-        for (String id : newInvitedParseIds) {
-            ParseObject newInvitee = new ParseObject("Event");
             newInvitee.put("TimeVote", suggestedTimesList);
             newInvitee.put("Chat", chat);
+            newInvitee.put("globalId", globalId);
             newInvitee.saveInBackground();
-        }
-
-        // TODO: check if event changed at all first
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("globalId", globalId);
-        List<ParseObject> invitees = new ArrayList<>();
-        try {
-            invitees = query.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        for (ParseObject invitee:invitees) {
-            invitee.put("TimeVote", suggestedTimesList);
-            invitee.put("Chat", chat);
-            invitee.saveInBackground();
         }
     }
 
@@ -523,6 +498,8 @@ public class EventViewerActivity extends Activity {
             invitee.put("Location", loc);
             invitee.put("LocationId", locId);
             invitee.put("InviteList", inviteId);
+            invitee.put("TimeVote", suggestedTimesList);
+            invitee.put("Chat", chat);
             invitee.saveInBackground();
         }
     }
