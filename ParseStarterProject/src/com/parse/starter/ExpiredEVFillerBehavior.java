@@ -11,6 +11,12 @@ import com.parse.ParseObject;
  * Created by andrew on 5/12/15.
  */
 public class ExpiredEVFillerBehavior implements EVFillerBehavior {
+    /**
+     * Fills the view for an expired event
+     *
+     * @param eventInfo ParseObject that contains the event
+     * @param parent the activity that calls the filler
+     */
     public void fillView(ParseObject eventInfo, Activity parent) {
         TextView title_text = (TextView) parent.findViewById(R.id.event_title);
         TextView time_text = (TextView) parent.findViewById(R.id.event_time);

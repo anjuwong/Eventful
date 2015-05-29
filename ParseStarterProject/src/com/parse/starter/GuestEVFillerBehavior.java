@@ -15,6 +15,12 @@ import com.parse.ParseObject;
  */
 public class GuestEVFillerBehavior implements EVFillerBehavior {
     // can add time and location
+    /**
+     * Fills the view for a guest event
+     *
+     * @param eventInfo ParseObject that contains the event
+     * @param parent the activity that calls the filler
+     */
     public void fillView(ParseObject eventInfo, Activity parent) {
         TextView title_text = (TextView) parent.findViewById(R.id.event_title);
         TextView time_text = (TextView) parent.findViewById(R.id.event_time);
