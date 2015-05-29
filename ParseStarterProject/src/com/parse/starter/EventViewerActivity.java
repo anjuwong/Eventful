@@ -90,6 +90,7 @@ public class EventViewerActivity extends Activity {
     private Date datetime;
 
     private List<Date> suggestedTimesList = new ArrayList<>();
+    private List<String> chat = new ArrayList<>();
 
     private Date emptyDate;
     private TextView title_text;
@@ -196,6 +197,7 @@ public class EventViewerActivity extends Activity {
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
             suggestedTimesList = event.getList("TimeVote");
+            chat = event.getList("Chat");
             status   = event.getInt("Status");
             globalId = event.getString("globalId");
 
@@ -451,6 +453,7 @@ public class EventViewerActivity extends Activity {
         event.put("InviteList", inviteId);
         event.put("globalId", globalId);
         event.put("TimeVote", suggestedTimesList);
+        event.put("Chat", chat);
         event.saveInBackground();
     }
 
@@ -740,7 +743,6 @@ public class EventViewerActivity extends Activity {
         builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
                 TimePicker tp = (TimePicker)layout.findViewById(R.id.edit_time);
                 DatePicker dp = (DatePicker)layout.findViewById(R.id.edit_date);
                 Calendar cal = Calendar.getInstance();
@@ -754,6 +756,7 @@ public class EventViewerActivity extends Activity {
 
                 if(!suggestedTimesList.contains(cal.getTime()))
                     suggestedTimesList.add(cal.getTime());
+
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -779,6 +782,56 @@ public class EventViewerActivity extends Activity {
                         time_text.setText(datetime.toString());
                     }
                 });
+        builder.create();
+        builder.show();
+    }
+
+    public void chat(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Leave a Message");
+        builder.setMessage("Message");
+
+        // Set an EditText view to get user input
+        final EditText userInput = new EditText(this);
+        builder.setView(userInput);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                chat.add(userInput.getText().toString());
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        builder.show();
+    }
+
+    public void viewChat(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+
+        // set title
+        builder.setTitle("Messages");
+
+        String messages = "";
+
+        for(String s : chat) {
+            messages += s + "\n";
+        }
+
+        // set dialog message
+        builder
+                .setMessage(messages)
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
         builder.create();
         builder.show();
     }

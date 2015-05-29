@@ -176,7 +176,7 @@
     <TextView
         android:paddingLeft="20sp"
         android:paddingTop="10sp"
-        android:paddingBottom="10sp"
+        android:paddingBottom="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Suggest New Time"
@@ -184,6 +184,30 @@
         android:clickable="true"
         android:onClick="suggestTime"
         android:textStyle="bold"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Chat"
+            android:id="@+id/chatbutton"
+            android:onClick="chat"
+            android:layout_gravity="bottom"
+            android:layout_alignParentLeft="true"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Chat"
+            android:id="@+id/viewchatbutton"
+            android:layout_toLeftOf="@+id/chatbutton"
+            android:onClick="viewChat"
+            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -227,7 +251,4 @@
             android:text="Submit"
              />
     </RelativeLayout>
-
-
-
 </LinearLayout>
