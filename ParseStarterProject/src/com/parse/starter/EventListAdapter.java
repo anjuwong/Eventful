@@ -17,7 +17,7 @@ import java.util.List;
 public class EventListAdapter extends ArrayAdapter<EventListItem> {
 
     private List<EventListItem> items;
-    
+
     public EventListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         // TODO Auto-generated constructor stub

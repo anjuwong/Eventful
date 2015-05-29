@@ -8,9 +8,19 @@ import com.parse.ParseObject;
 public abstract class Event {
     protected ParseObject event;
 
+    /**
+     * Function that returns the ParseObject wrapped by the class
+     *
+     * @return the ParseObject wrapped by this class
+     */
     final public ParseObject getParseObject() {
         return event;
     }
 
+    /**
+     * Function that returns whether the ParseObject wrapped by this class should not be filtered
+     *
+     * @return whether the ParseObject wrapped by the class should not be filtered
+     */
     public abstract boolean isValid();
 }

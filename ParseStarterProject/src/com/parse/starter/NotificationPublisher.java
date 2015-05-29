@@ -16,6 +16,13 @@ public class NotificationPublisher extends BroadcastReceiver {
     public static String NOTIFICATION_ID = "notification-id";
     public static String NOTIFICATION = "notification";
 
+    /**
+     * Function of Broadcast Receiver that actually initiates the notification
+     * Woken by the alarm manager at the appropriate time
+     *
+     * @param context the Context of the application
+     * @param intent the intent that contains the notification to be alerted
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 

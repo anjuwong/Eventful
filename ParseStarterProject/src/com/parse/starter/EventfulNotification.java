@@ -15,6 +15,14 @@ import android.support.v4.app.NotificationCompat;
 public class EventfulNotification {
     private static int requestCode = 0;
 
+    /**
+     * Returns a notification object in the context of the app
+     *
+     * @param context the Context of the application
+     * @param title String:  title of the notification in the status bar
+     * @param msg String: content of the notification to be displayed
+     * @return Notification: the constructed notification object
+     */
     public static Notification createNotification(Context context, String title, String msg) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
@@ -41,7 +49,15 @@ public class EventfulNotification {
         return mBuilder.build();
     }
 
-    // Delay is in milliseconds
+    /**
+     * Schedules the supplied notification object to occur in *delay* milliseconds
+     * Uses the alarm manager service to handle the delay
+     *
+     * @param context the Context of the application
+     * @param notification  the notificaiton to be displayed
+     * @param eventHash ID of the event, used to reschedule the notification if needed
+     * @param delay the time to delay the notification in milliseconds
+     */
     public static void scheduleNotification(Context context, Notification notification, int eventHash, int delay) {
 
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);

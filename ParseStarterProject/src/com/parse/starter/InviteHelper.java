@@ -68,7 +68,7 @@ public class InviteHelper {
     }
 
 
-    /*
+    /**
      * Builds and opens up the invite dialog popup.
      */
     public void openInviteDialog() {
@@ -98,7 +98,7 @@ public class InviteHelper {
         builder.show();
     }
 
-    /*
+    /**
         Resets the invite helper once the event is saved.
         Clears the list of invited parse user ids and the list of indices.
         Filters the array of friend names to contain only the ones that haven't been invited yet
@@ -116,7 +116,7 @@ public class InviteHelper {
 
         friendNames.removeAll(invitedFriendNames);
     }
-    /*
+    /**
      * Utility method to parse the list of JSON Objects and get an array of friend names.
      *
      * @return list of friend names
@@ -147,7 +147,7 @@ public class InviteHelper {
 
     }
 
-    /*
+    /**
       Returns the parse ids of the invited users. This includes users who have already clicked
       attending or not attending.
 
@@ -159,7 +159,7 @@ public class InviteHelper {
     }
 
 
-    /*
+    /**
         Creates a DialogInterface listener to save the checked users.
 
         @return DialogInterface.OnClickListener

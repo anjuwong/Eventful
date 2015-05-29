@@ -45,7 +45,7 @@ public class LoginActivity extends Activity {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
-    /*
+    /**
      * Login to Facebook and store the user ID.
      */
     public void initLogin() {
@@ -65,7 +65,7 @@ public class LoginActivity extends Activity {
         });
     }
 
-    /*
+    /**
      * Check if the user needs to log in to Facebook.
      *
      * @return boolean value determining if log in is required.
@@ -78,7 +78,7 @@ public class LoginActivity extends Activity {
                             ParseFacebookUtils.isLinked(currentUser));
     }
 
-    /*
+    /**
      * Open up the main view.
      */
     private void openMainPage() {
@@ -86,7 +86,7 @@ public class LoginActivity extends Activity {
         startActivity(intent);
     }
 
-    /*
+    /**
      * Check if the Facebook ID is stored in Parse. If not, get it.
      */
     private void getNameAndFacebookID() {
@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
         facebookHelper.getNameAndId(ParseUser.getCurrentUser());
     }
 
-    /*
+    /**
      * Get and store the user's friend list. This is done every time the user starts the app.
      */
     private void getFriendsList() {
