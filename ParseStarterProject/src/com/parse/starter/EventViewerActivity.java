@@ -393,7 +393,7 @@ public class EventViewerActivity extends Activity {
            query for old objects and update fields */
         saveNewInviteEvents();
         //if (!(eventId == "" || clone))
-            saveOldInviteEvents();
+        saveOldInviteEvents();
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
@@ -741,6 +741,10 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
+    /**
+     * Opens up the datetime selector to allow user to suggest an alternate time for the event
+     * @param view
+     */
     public void suggestTime(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
         LayoutInflater inflater = (LayoutInflater) EventViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -773,6 +777,10 @@ public class EventViewerActivity extends Activity {
         final Dialog dialog = builder.show();
     }
 
+    /**
+     * Create an alert dialog with the suggested times for the application
+     * @param view
+     */
     public void viewSuggetedTimes(View view) {
         String[] dateList = new String[suggestedTimesList.size()];
         for(int i = 0; i < suggestedTimesList.size(); i++) {
@@ -791,6 +799,10 @@ public class EventViewerActivity extends Activity {
         builder.show();
     }
 
+    /**
+     * Opens an alert dialog for the user to leave a message on the event
+     * @param view
+     */
     public void chat(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -815,6 +827,10 @@ public class EventViewerActivity extends Activity {
         builder.show();
     }
 
+    /**
+     * Opens an alert dialog for the user to see messages on the event
+     * @param view
+     */
     public void viewChat(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
 
