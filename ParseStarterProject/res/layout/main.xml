@@ -26,22 +26,39 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-        <ImageButton
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:src="@drawable/ic_new"
-            android:background="@null"
-            android:onClick="newEvent"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="bottom">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FILTER EVENTS BY TYPE"
-            android:id="@+id/filterbutton"
-            android:onClick="filterEventsByType"
-            android:layout_gravity="center_horizontal|bottom" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/placeholder"
+                android:src="@drawable/ic_food"
+                android:background="@null"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:src="@drawable/ic_new"
+                android:background="@null"
+                android:onClick="newEvent"
+                android:layout_toLeftOf="@id/placeholder"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FILTER EVENTS BY TYPE"
+                android:id="@+id/filterbutton"
+                android:src="@mipmap/ic_filterfull"
+                android:background="@null"
+                android:onClick="filterEventsByType"
+                android:layout_toRightOf="@+id/placeholder" />
+        </RelativeLayout>
 
     </LinearLayout>
 </android.support.v4.app.FragmentTabHost>
