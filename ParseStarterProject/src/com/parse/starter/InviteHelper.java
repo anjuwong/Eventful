@@ -102,6 +102,8 @@ public class InviteHelper {
         Resets the invite helper once the event is saved.
         Clears the list of invited parse user ids and the list of indices.
         Filters the array of friend names to contain only the ones that haven't been invited yet
+
+        @param savedInvitedParseIds list of the parse ids of users that have already been invited.
      */
     public void resetInviteHelper(List<String> savedInvitedParseIds) {
         invitedParseIds.clear();
@@ -116,6 +118,8 @@ public class InviteHelper {
     }
     /*
      * Utility method to parse the list of JSON Objects and get an array of friend names.
+     *
+     * @return list of friend names
      */
     private List<String> getFriendNames() {
         List<HashMap<String, String>> friendJSONObjects =
@@ -146,12 +150,20 @@ public class InviteHelper {
     /*
       Returns the parse ids of the invited users. This includes users who have already clicked
       attending or not attending.
+
+      @return list of parse ids
      */
     public List<String> getInvitedParseIds() {
 
         return invitedParseIds;
     }
 
+
+    /*
+        Creates a DialogInterface listener to save the checked users.
+
+        @return DialogInterface.OnClickListener
+     */
     private DialogInterface.OnClickListener saveCheckboxSelection() {
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override

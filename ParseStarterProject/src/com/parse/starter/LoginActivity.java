@@ -67,6 +67,8 @@ public class LoginActivity extends Activity {
 
     /*
      * Check if the user needs to log in to Facebook.
+     *
+     * @return boolean value determining if log in is required.
      */
     private boolean isLoginNeeded() {
         ParseUser currentUser = ParseUser.getCurrentUser();
