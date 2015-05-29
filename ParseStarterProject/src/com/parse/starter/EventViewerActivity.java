@@ -383,6 +383,7 @@ public class EventViewerActivity extends Activity {
         }
 
         saveOwnEvent();
+        saveChatSuggestedTime();
 
         /* Only the creator of an event can affect other users*/
 
@@ -473,6 +474,30 @@ public class EventViewerActivity extends Activity {
             newInvitee.put("InviteList", inviteId);
             newInvitee.put("globalId", globalId);
             newInvitee.saveInBackground();
+        }
+    }
+
+    public void saveChatSuggestedTime() {
+        for (String id : newInvitedParseIds) {
+            ParseObject newInvitee = new ParseObject("Event");
+            newInvitee.put("TimeVote", suggestedTimesList);
+            newInvitee.put("Chat", chat);
+            newInvitee.saveInBackground();
+        }
+
+        // TODO: check if event changed at all first
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.whereEqualTo("globalId", globalId);
+        List<ParseObject> invitees = new ArrayList<>();
+        try {
+            invitees = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for (ParseObject invitee:invitees) {
+            invitee.put("TimeVote", suggestedTimesList);
+            invitee.put("Chat", chat);
+            invitee.saveInBackground();
         }
     }
 
