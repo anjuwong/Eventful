@@ -243,7 +243,7 @@
 
             <ImageButton
                 android:id="@+id/submit_button"
-                android:src="@mipmap/ic_go"
+                android:src="@mipmap/ic_check"
                 android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -803,7 +803,7 @@ public class EventViewerActivity extends Activity {
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                chat.add(userInput.getText().toString());
+                chat.add(getName(userId) + ": " + userInput.getText().toString());
             }
         });
 
