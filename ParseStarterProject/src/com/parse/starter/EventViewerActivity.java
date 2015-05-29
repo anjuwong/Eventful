@@ -780,7 +780,7 @@ public class EventViewerActivity extends Activity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
-        builder.setTitle("Choose an time")
+        builder.setTitle("Choose a time")
                 .setItems(dateList, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         datetime = suggestedTimesList.get(which);
