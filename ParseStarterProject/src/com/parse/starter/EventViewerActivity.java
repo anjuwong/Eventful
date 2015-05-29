@@ -17,6 +17,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -24,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -90,6 +93,7 @@ public class EventViewerActivity extends Activity {
     private Date datetime;
 
     private List<Date> suggestedTimesList = new ArrayList<>();
+    private List<String> chat = new ArrayList<>();
 
     private Date emptyDate;
     private TextView title_text;
@@ -196,6 +200,7 @@ public class EventViewerActivity extends Activity {
             inviteId = event.getString("InviteList");
             creator  = event.getString("Creator");
             suggestedTimesList = event.getList("TimeVote");
+            chat = event.getList("Chat");
             status   = event.getInt("Status");
             globalId = event.getString("globalId");
 
@@ -386,11 +391,9 @@ public class EventViewerActivity extends Activity {
 
         /* only do if not new object (eventId == "" || clone == true)
            query for old objects and update fields */
-        if(creator.equals(userId)) {
-            saveNewInviteEvents();
-            if (eventId == "" || clone)
-                saveOldInviteEvents();
-        }
+        saveNewInviteEvents();
+        //if (!(eventId == "" || clone))
+            saveOldInviteEvents();
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
         message("Saved!");
@@ -451,6 +454,7 @@ public class EventViewerActivity extends Activity {
         event.put("InviteList", inviteId);
         event.put("globalId", globalId);
         event.put("TimeVote", suggestedTimesList);
+        event.put("Chat", chat);
         event.saveInBackground();
     }
 
@@ -468,6 +472,8 @@ public class EventViewerActivity extends Activity {
             newInvitee.put("Type", type);
             newInvitee.put("Status", 0);
             newInvitee.put("InviteList", inviteId);
+            newInvitee.put("TimeVote", suggestedTimesList);
+            newInvitee.put("Chat", chat);
             newInvitee.put("globalId", globalId);
             newInvitee.saveInBackground();
         }
@@ -492,6 +498,8 @@ public class EventViewerActivity extends Activity {
             invitee.put("Location", loc);
             invitee.put("LocationId", locId);
             invitee.put("InviteList", inviteId);
+            invitee.put("TimeVote", suggestedTimesList);
+            invitee.put("Chat", chat);
             invitee.saveInBackground();
         }
     }
@@ -740,7 +748,6 @@ public class EventViewerActivity extends Activity {
         builder.setView(layout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
                 TimePicker tp = (TimePicker)layout.findViewById(R.id.edit_time);
                 DatePicker dp = (DatePicker)layout.findViewById(R.id.edit_date);
                 Calendar cal = Calendar.getInstance();
@@ -754,6 +761,7 @@ public class EventViewerActivity extends Activity {
 
                 if(!suggestedTimesList.contains(cal.getTime()))
                     suggestedTimesList.add(cal.getTime());
+
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -783,6 +791,56 @@ public class EventViewerActivity extends Activity {
         builder.show();
     }
 
+    public void chat(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Leave a Message");
+        builder.setMessage("Message");
+
+        // Set an EditText view to get user input
+        final EditText userInput = new EditText(this);
+        builder.setView(userInput);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                chat.add(getName(userId) + ": " + userInput.getText().toString());
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        builder.show();
+    }
+
+    public void viewChat(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EventViewerActivity.this);
+
+        // set title
+        builder.setTitle("Messages");
+
+        String messages = "";
+
+        for(String s : chat) {
+            messages += s + "\n";
+        }
+
+        // set dialog message
+        builder
+                .setMessage(messages)
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        builder.create();
+        builder.show();
+    }
+
     public void editInvites(View view) {
         inviteHelper.openInviteDialog();
 
@@ -798,6 +856,7 @@ public class EventViewerActivity extends Activity {
                 R.layout.row,
                 nameList);
         invited.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(invited);
     }
 
     /* Object to pass to InviteHelper so it can access event_invite_list */
@@ -842,8 +901,8 @@ public class EventViewerActivity extends Activity {
                             LatLng location = places.get(0).getLatLng();
                             String searchString =
                                     "google.navigation:q="
-                                    + location.latitude + ","
-                                    + location.longitude;
+                                            + location.latitude + ","
+                                            + location.longitude;
                             Uri gmmIntentUri = Uri.parse(searchString);
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
@@ -852,5 +911,28 @@ public class EventViewerActivity extends Activity {
                         places.release();
                     }
                 });
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            //pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight()*1.05;
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }

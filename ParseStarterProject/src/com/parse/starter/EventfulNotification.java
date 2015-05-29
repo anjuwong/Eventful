@@ -49,8 +49,8 @@ public class EventfulNotification {
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, eventHash, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long futureInMillis = Math.max((long)0.0, SystemClock.elapsedRealtime() + delay);
+        long futureInMillis = Math.max((long)0.0, delay);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, futureInMillis, pendingIntent);
     }
 }
