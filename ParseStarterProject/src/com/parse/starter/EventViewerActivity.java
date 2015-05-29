@@ -392,7 +392,7 @@ public class EventViewerActivity extends Activity {
         /* only do if not new object (eventId == "" || clone == true)
            query for old objects and update fields */
         saveNewInviteEvents();
-        if (!(eventId == "" || clone))
+        //if (!(eventId == "" || clone))
             saveOldInviteEvents();
 
         inviteHelper.resetInviteHelper(fullInvitedParseIds);
